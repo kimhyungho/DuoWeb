@@ -15,6 +15,7 @@ const AppLayout = ({ children }) => {
                 </Menu.Item>
                 <Menu.Item>
                     <Link href='/report'><a>신고하기</a></Link>
+                
                 </Menu.Item>
             </Menu>
 
