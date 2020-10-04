@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Row, Col, Menu } from 'antd';
+import { Button, Row, Col, Menu } from 'antd';
 
 const AppLayout = ({ children }) => {
     return (
         <div>
+            <Link href="/login"><a><Button type="primary">로그인</Button></a></Link>
             <Menu mode="horizontal">
                 <Menu.Item>
                     <Link href='/'><a>홈</a></Link>

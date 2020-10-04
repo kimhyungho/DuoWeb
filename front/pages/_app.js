@@ -12,9 +12,7 @@ const App = ({ Component }) => {
                 <meta charSet="utf-8" />
                 <title>Duo9ham</title>
             </Head>
-            
                 <Component />
-
         </>
     );
 
