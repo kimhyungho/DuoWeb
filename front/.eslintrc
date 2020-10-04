@@ -1,0 +1,26 @@
+// 코드의 규칙을 정해준다. 여러사람이 코딩해도 한사람이 만든 것 처럼
+// 코드를 깔끔해게 정리
+// json임
+{
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "extends": [                    // 실질적인 규칙
+        "eslint:recommend",
+        "plugin:react/recommended"
+    ],
+    "plugins": [
+        "import",
+        "react-hooks"
+    ],
+    "rules": {}
+}
