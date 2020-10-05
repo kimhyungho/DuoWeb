@@ -5,10 +5,6 @@ import styled from 'styled-components';
 
 const LolPostList = ({ data }) => {
 
-    const ListWrapper = styled(List.Item)`
-        margin-top: 5px;
-        width: 270px;
-    `;
     return (
         <>
             <List
@@ -26,7 +22,7 @@ const LolPostList = ({ data }) => {
                 dataSource={data}
                 renderItem={(item) => (
                     <ListWrapper>
-                        <Card actions={[item.content]}>
+                        <Card size="default" actions={[item.content]}>
                             <Card.Meta description={item.title} />
                         </Card>
                     </ListWrapper>

@@ -19,7 +19,6 @@ const AppLayout = ({ children }) => {
                 <Menu.Item key="report"><Link href='/report'><a>신고하기</a></Link></Menu.Item>
 
             </Menu>
-
             <Row>
                 <Col xs={24} md={6} >
                     왼쪽메뉴
