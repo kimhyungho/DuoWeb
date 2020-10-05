@@ -33,16 +33,6 @@
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/event.js"
-    ],
-    "/login": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/login.js"
-    ],
-    "/report": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/report.js"
     ]
   },
   "ampFirstPages": []
