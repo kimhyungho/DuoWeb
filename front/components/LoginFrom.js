@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Button } from 'antd';
 import KakaoLogin from 'react-kakao-login';
 import GoogleLogin from 'react-google-login';
-import NaverLogin from 'react-naver-login';
+import NaverLogin from 'react-login-by-naver';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -42,9 +42,13 @@ const LoginFrom = () => {
                 onSuccess={responseGoogle}
                 onFailure={responseFail}
             ></GoogleLogin>
-            {/* <NaverLogin
-                clientId={'0xe5BaDwdA6UNdboCXn7'}>
-            </NaverLogin> */}
+            <NaverLogin
+                clientId="0xe5BaDwdA6UNdboCXn7"
+                callbackUrl="http://127.0.0.1:3000"
+                render={(props) => <Button onClick={props.onClick}>Naver Login</Button>}
+                onSuccess={(naverUser) => console.log(naverUser)}
+                onFailure={() => console.error(result)}
+            />
         </div>
     );
 };

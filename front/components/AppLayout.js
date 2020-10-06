@@ -17,7 +17,6 @@ const AppLayout = ({ children }) => {
                 </SubMenu>
                 <Menu.Item key="event"><Link href='/event'><a>이벤트</a></Link></Menu.Item>
                 <Menu.Item key="report"><Link href='/report'><a>신고하기</a></Link></Menu.Item>
-
             </Menu>
             <Row>
                 <Col xs={24} md={6} >
