@@ -1,14 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';     // prop-types 모듈 사용
 import Link from 'next/link';
-import { Button, Row, Col, Menu } from 'antd';
+import { Menu, Row, Col } from 'antd';            // https://ant.design/components/menu/
+import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+
+import UserProfile from './UserProfile';
+import LoginForm from './LoginForm';
 
 const { SubMenu } = Menu;
 
+
+
+
 const AppLayout = ({ children }) => {
+
+    const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
     return (
         <div>
-            <Link href="/login"><a><Button type="primary">로그인</Button></a></Link>
             <Menu mode="horizontal" >
                 <SubMenu title="게임목록">
                     <Menu.Item key="lol"><Link href="/"><a>리그오브레전드</a></Link></Menu.Item>
@@ -19,19 +29,14 @@ const AppLayout = ({ children }) => {
                 <Menu.Item key="report"><Link href='/report'><a>신고하기</a></Link></Menu.Item>
             </Menu>
             <Row>
-                <Col xs={24} md={6} >
-                    왼쪽메뉴
-                </Col>
-
-                <Col xs={24} md={12} >
+                <Col xs={12} md={18} >
                     {children}
                 </Col>
 
-                <Col xs={24} md={6} >
-                    오른쪽 메뉴
+                <Col xs={12} md={6} >
+                    {isLoggedIn ? <UserProfile /> : <LoginForm />}
                 </Col>
             </Row>
-
         </div>
     );
 };
