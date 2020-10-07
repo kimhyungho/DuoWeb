@@ -7,5 +7,6 @@
   <li>next.js</li>
   <li>ant design</li>
   <li>styled components</li>
-  <li>next-redux-wrapper</li>
+  <li>redux</li>
 </ul>
+
