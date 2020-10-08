@@ -41,13 +41,13 @@ const LoginWrapper = styled(Form)`
 
 const LoginFrom = () => {
     const userId = 1;
-    const userNickname = 'kim';
+    const userNickname = '임시 닉네임';
 
     const dispatch = useDispatch();
 
     const onClickLogin = useCallback(() => {
-        dispatch(loginAction({}));
-    }, [])
+        dispatch(loginAction({userId, userNickname}));
+    }, [userId, userNickname])
 
 
 

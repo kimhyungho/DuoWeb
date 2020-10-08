@@ -1,7 +1,15 @@
 import React from 'react';
-import { List, Card } from 'antd';
+import { List, Card, Button } from 'antd';
 import styled from 'styled-components';
 
+const PostCard = styled(Card)`
+    width: 350px;
+    height: ;
+`;
+
+const ListItem = styled(List.Item)`
+    height: 100px;
+`;
 
 const LolPostList = ({ data }) => {
 
@@ -21,11 +29,9 @@ const LolPostList = ({ data }) => {
                 bordered
                 dataSource={data}
                 renderItem={(item) => (
-                    <ListWrapper>
-                        <Card size="default" actions={[item.content]}>
-                            <Card.Meta description={item.title} />
-                        </Card>
-                    </ListWrapper>
+                    <ListItem>
+                        <PostCard title={item.title} actions={["자세히보기"]}>{item.content}</PostCard>
+                    </ListItem>
                 )}
             />
         </>
