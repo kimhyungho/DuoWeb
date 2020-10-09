@@ -11,8 +11,6 @@ import LoginForm from './LoginForm';
 const { SubMenu } = Menu;
 
 
-
-
 const AppLayout = ({ children }) => {
 
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
@@ -29,12 +27,12 @@ const AppLayout = ({ children }) => {
                 <Menu.Item key="report"><Link href='/report'><a>신고하기</a></Link></Menu.Item>
             </Menu>
             <Row>
-                <Col xs={12} md={18} >
-                    {children}
+                <Col xs={12} md={5} >
+                    {isLoggedIn ? <UserProfile /> : <LoginForm />}
                 </Col>
 
-                <Col xs={12} md={6} >
-                    {isLoggedIn ? <UserProfile /> : <LoginForm />}
+                <Col xs={24} md={18} >
+                    {children}
                 </Col>
             </Row>
         </div>
