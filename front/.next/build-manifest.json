@@ -29,15 +29,15 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/event": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/event.js"
-    ],
     "/info": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/info.js"
+    ],
+    "/lol_write": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/lol_write.js"
     ]
   },
   "ampFirstPages": []

@@ -27,7 +27,7 @@ const AppLayout = ({ children }) => {
                 <Menu.Item key="report"><Link href='/report'><a>신고하기</a></Link></Menu.Item>
             </Menu>
             <Row>
-                <Col xs={12} md={5} >
+                <Col xs={24} md={5} >
                     {isLoggedIn ? <UserProfile /> : <LoginForm />}
                 </Col>
 

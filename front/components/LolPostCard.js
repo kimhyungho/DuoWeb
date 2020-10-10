@@ -39,11 +39,7 @@ const LolPostCard = ({ post }) => {
             </CardWrapper>}
 
         </>
-
-
-
     );
-
 };
 
 
