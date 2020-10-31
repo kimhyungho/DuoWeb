@@ -1,19 +1,22 @@
 export const initialState = {
     isLoggedIn: false,
     userId: null,
-    userNickname: null,
+    nickname: null,
+    userToken: null,
+    accessToken: null,
+    platform: null,
 }
 
-export const loginAction = (data) => {
+export const loginRequestAction = (data) => {
     return {
-        type: 'LOG_IN',
+        type: 'LOG_IN_REQUEST',
         data,
     }
 }
 
-export const logoutAction = () => {
+export const logoutRequestAction = () => {
     return {
-        type: 'LOG_OUT',
+        type: 'LOG_OUT_REQUEST',
     }
 }
 

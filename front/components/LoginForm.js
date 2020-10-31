@@ -41,13 +41,13 @@ const LoginWrapper = styled(Form)`
 
 const LoginFrom = () => {
     const userId = 1;
-    const userNickname = '임시 닉네임';
+    const nickname = '임시 닉네임';
 
     const dispatch = useDispatch();
 
     const onClickLogin = useCallback(() => {
         dispatch(loginAction({userId, userNickname}));
-    }, [userId, userNickname])
+    }, [userId, nickname])
 
 
 
@@ -63,6 +63,7 @@ const LoginFrom = () => {
 
     const responseGoogle = (response) => {
         console.log(response.tokenId);
+
     };
 
     const responseFail = (err) => {
