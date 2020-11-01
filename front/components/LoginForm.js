@@ -5,7 +5,7 @@ import GoogleLogin from 'react-google-login';
 import NaverLogin from 'react-login-by-naver';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginAction } from '../reducers/user'
+import { socailLoginRequest } from '../reducers/user';
 
 
 const KaKaoBtn = styled(KakaoLogin)`
@@ -45,16 +45,12 @@ const LoginFrom = () => {
 
     const dispatch = useDispatch();
 
-    const onClickLogin = useCallback(() => {
-        dispatch(loginAction({userId, userNickname}));
-    }, [userId, nickname])
-
-
 
     // const [id, setId] = useState('');
 
     const responseKakao = (response) => {
         console.log(response.response.access_token);
+        dispatch(socailLoginRequest(response.response.access_token, 'kakao'));
     };
 
     const responseNaver = (response) => {
@@ -88,14 +84,13 @@ const LoginFrom = () => {
                 onFailure={() => console.error(result)}
             />
             <br />
-            <GoogleBtn
+            {/* <GoogleBtn
                 clientId={'628315189039-kira075j0fog81kb2kua27l8ubtlg0a4.apps.googleusercontent.com'}
                 buttonText="구글로그인"
                 onSuccess={responseGoogle}
                 onFailure={responseFail}
-            ></GoogleBtn>
+            ></GoogleBtn> */}
             <br />
-            <TemporaryBtn onClick={onClickLogin}>임시 로그인</TemporaryBtn>
         </LoginWrapper>
     );
 };

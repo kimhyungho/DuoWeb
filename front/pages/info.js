@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import AppLayout from '../components/AppLayout';
-import LolPostCard from '../components/LolPostCard';
 import MyInfo from '../components/MyInfo';
 
 const Info = () => {

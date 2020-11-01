@@ -1,57 +1,52 @@
-import { all, delay, fork, put, takeLatest } from "redux-saga/effects";
+import { all, call, fork, put, takeLatest, select } from "redux-saga/effects";
 import axios from 'axios';
+import * as selectors from './selectors'
 
-function logInAPI() {
-    return axios.post('/api/login')
+function socialLoginAPI() {
+
+    // return axios.post(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/${platform}`,
+    // {}, {headers: {Authorization: accessToken}});
+
 }
 
-function logOutAPI() {
-    return axios.post('/api/logout')
-}
 
 function* logIn(action) {
     try {
-        //const result = yield call(logInAPI);
-        yield delay(1000);
-        yield put({
-            type: 'LOG_IN_SUCCESS',
-            data: action.data,
-        });
 
-    } catch(err) {
+        const accessToken = yield select(selectors.accessToken);
+        const platform = yield select(selectors.platform);
 
+        const result = axios.post(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/auth/${platform}`,
+            {}, { headers: { Authorization: accessToken } });
+
+        
+
+        console.log("lkkk", result);
+
+
+        // yield put({
+        //     type: 'LOG_IN_SUCCESS',
+        //     userToken: userToken,
+        //     userId: userId,
+        //     nickname: nickname,
+        // });
+
+    } catch (err) {
+
+        console.log("안된다.");
+        // yield put({
+        //     type: 'LOG_IN_FAILURE',
+        //     error: action.response.data,
+        // });
     }
 }
-
-function* logOut() {
-    try {
-        // const result = yield call(logOutAPI);
-        yield delay(1000);
-        yield put({
-            type: 'LOG_OUT_SUCCESS',
-            data: result.data
-        });
-
-    } catch(err) {
-        yield put({
-            type: 'LOG_OUT_FAILURE',
-            data: err.response.data,
-        })
-    }
-}
-
 
 function* watchLogIn() {
-    yield takeLatest('LOG_IN_REQUEST', logIn);
-}
-
-function* watchLogOut() {
-    yield takeLatest('LOG_OUT_REQUEST', logIn);
+    yield takeLatest('SOCIAL_LOG_IN_REQUEST', logIn);
 }
 
 export default function* userSaga() {
     yield all([
         fork(watchLogIn),
-        fork(watchLogOut),
     ]);
 }

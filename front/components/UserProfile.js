@@ -1,11 +1,10 @@
 import React, { useCallback } from 'react';
 import { Card, Button } from 'antd';
-import { logoutAction } from '../reducers/user'
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link'
 const UserProfile = () => {
 
-    const userNickname = useSelector((state) => state.user.userNickname)
+    const nickname = useSelector((state) => state.user.nickname)
     const dispatch = useDispatch();
     const onClickLogout = useCallback(() => {
         dispatch(logoutAction());
@@ -22,7 +21,7 @@ const UserProfile = () => {
                 ]}
             >
                 <Card.Meta
-                    title={userNickname}
+                    title={nickname}
                 />
                 <Button onClick={onClickLogout}>로그아웃</Button>
             </Card>

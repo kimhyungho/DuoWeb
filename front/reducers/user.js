@@ -1,10 +1,18 @@
 export const initialState = {
-    isLoggedIn: false,
     userId: null,
     nickname: null,
     userToken: null,
     accessToken: null,
     platform: null,
+}
+
+
+export const socailLoginRequest = (accessToken, platform) => {
+    return {    
+        type : 'SOCIAL_LOG_IN_REQUEST',
+        accessToken,
+        platform,
+    }
 }
 
 export const loginRequestAction = (data) => {
@@ -22,19 +30,27 @@ export const logoutRequestAction = () => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOG_IN':
+        case 'SOCIAL_LOG_IN_REQUEST':
             return {
                 ...state,
-                isLoggedIn: true,
+                accessToken: action.accessToken,
+                platform: action.platform,
+            }
+            case 'LOG_IN_SUCCESS':
+            return {
+                ...state,
                 userId: action.data.userId,
-                userNickname: action.data.userNickname,
+                nickname: action.data.userNickname,
+                userToken: action.data.userToken,
             };
-        case 'LOG_OUT':
+        case 'LOG_OUT_REQUEST':
             return {
                 ...state,
-                isLoggedIn: false,
                 userId: null,
-                userNickname: null,
+                nickname: null,
+                userToken: null,
+                accessToken: null,
+                platform: null,
             };
         default:
             return state;
