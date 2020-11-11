@@ -1,3 +1,1 @@
-export const accessToken = (state) => state.user.accessToken;
-
-export const platform = (state) => state.user.platform;
+export const userToken = (state) => state.user.userToken;

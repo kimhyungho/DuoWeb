@@ -7,16 +7,20 @@ import { useSelector } from 'react-redux';
 
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
+import Logo from '../images/logo.png';
 
 const { SubMenu } = Menu;
+const LogoTab = styled.div`
 
+`;
 
 const AppLayout = ({ children }) => {
 
-    const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+    const { userId } = useSelector((state) => state.user.me)
 
     return (
         <div>
+            <LogoTab><img src={Logo}></img></LogoTab>
             <Menu mode="horizontal" >
                 <SubMenu title="게임목록">
                     <Menu.Item key="lol"><Link href="/"><a>리그오브레전드</a></Link></Menu.Item>
@@ -28,7 +32,7 @@ const AppLayout = ({ children }) => {
             </Menu>
             <Row>
                 <Col xs={24} md={5} >
-                    {isLoggedIn ? <UserProfile /> : <LoginForm />}
+                    {userId ? <UserProfile /> : <LoginForm />}
                 </Col>
 
                 <Col xs={24} md={18} >

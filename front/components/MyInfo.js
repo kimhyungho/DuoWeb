@@ -2,13 +2,11 @@ import React, { useCallback, useState } from 'react';
 import { Button, Input, Form } from 'antd';
 import { useSelector } from 'react-redux';
 
-
 const MyInfo = () => {
-
-    const userNickname = useSelector((state) => state.user.userNickname);
+    const {nickname} = useSelector((state) => state.user);
     const [isChangeNickname, setIsChangeNickname] = useState(false);
 
-    const [nickname, setNickname] = useState(userNickname);
+    const [userNickname, setNickname] = useState(nickname);
     const onIsChangeNickname = useCallback(() => {
         setIsChangeNickname(true)
     });
@@ -31,7 +29,6 @@ const MyInfo = () => {
                 : <Input prefix={userNickname} suffix={<Button onClick={onIsChangeNickname}>변경</Button>} disabled />}
 
             <Button>회원탈퇴</Button>
-
         </>
     );
 }

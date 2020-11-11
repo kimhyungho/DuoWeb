@@ -1,75 +1,41 @@
+import produce from '../util/produce';
+
 export const initialState = {
-    mainPosts: [{
-        id: 1,
-        userId: 1,
-        title: '1번글',
-        content: 'asdfasdfasdfaaaaaaaaa',
-        Comments: [{
-            userNickname : '유저1',
-            content: '댓글1',
-        }, {
-            userNickname: '유저2',
-            content: '댓글2',
-        }]
-    },{
-        id: 2,
-        userId: 2,
-        title: 'title',
-        content: 'content',
-        Comments: [{
-            userNickname : '유저1',
-            content: '댓글1',
-        }, {
-            userNickname: '유저2',
-            content: '댓글2',
-        }]
-    },{
-        id: 3,
-        userId: 3,
-        title: 'title',
-        content: 'content',
-        Comments: [{
-            userNickname : '유저1',
-            content: '댓글1',
-        }, {
-            userNickname: '유저2',
-            content: '댓글2',
-        }]
-    },{
-        id: 4,
-        userId: 4,
-        title: 'title',
-        content: 'content',
-        Comments: [{
-            userNickname : '유저1',
-            content: '댓글1',
-        }, {
-            userNickname: '유저2',
-            content: '댓글2',
-        }]
-    }],
+    posts:[],
+    loadPostLoading: false,
+    loadPostDone: false,
+    loadPostError: null,
 };
 
+export const LOAD_ALL_LOL_POSTS_REQUEST = 'LOAD_ALL_LOL_POSTS_REQUEST';
+export const LOAD_ALL_LOL_POSTS_SUCCESS = 'LOAD_ALL_LOL_POSTS_SUCCESS';
+export const LOAD_ALL_LOL_POSTS_FAILURE = 'LOAD_ALL_LOL_POSTS_FAILURE';
 
-const reducer = (state = initialState, action) => {
+export const loadAllLolPostsRequestAction = (data) => ({
+    type: LOAD_ALL_LOL_POSTS_REQUEST,
+    data,   // userToken
+});
+
+
+const reducer = (state = initialState, action) => produce(state, (draft) => {
     switch (action.type) {
-        case 'LOG_IN':
-            return {
-                ...state,
-                isLoggedIn: true,
-                userId: action.data.userId,
-                userNickname: action.data.userNickname,
-            };
-        case 'LOG_OUT':
-            return {
-                ...state,
-                isLoggedIn: false,
-                userId: null,
-                userNickname: null,
-            };
+        case LOAD_ALL_LOL_POSTS_REQUEST:
+            draft.loadPostLoading = true;
+            draft.loadPostDone = false;
+            draft.loadPostError = null;
+            break;
+        case LOAD_ALL_LOL_POSTS_SUCCESS:
+            draft.loadPostLoading = false;
+            draft.loadPostDone = true;
+            draft.posts = draft.posts.concat(action.data);
+            break;
+        case LOAD_ALL_LOL_POSTS_FAILURE:
+            draft.loadPostLoading = false;
+            draft.loadPostError = action.error;
+            break;
         default:
-            return state;
+            break;
     }
-};
+});
 
 export default reducer;

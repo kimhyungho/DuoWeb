@@ -10,5 +10,4 @@ const Lol_Write = () => {
     );
 };
 
-
 export default Lol_Write;

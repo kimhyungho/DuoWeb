@@ -7,7 +7,6 @@ import withReduxSaga from 'next-redux-saga';
 
 
 const App = ({ Component }) => {
-
     return (
         <>
             <Head>

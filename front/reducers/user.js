@@ -1,60 +1,81 @@
+import produce from '../util/produce';
+
 export const initialState = {
-    userId: null,
-    nickname: null,
-    userToken: null,
-    accessToken: null,
-    platform: null,
-}
-
-
-export const socailLoginRequest = (accessToken, platform) => {
-    return {    
-        type : 'SOCIAL_LOG_IN_REQUEST',
-        accessToken,
-        platform,
-    }
-}
-
-export const loginRequestAction = (data) => {
-    return {
-        type: 'LOG_IN_REQUEST',
-        data,
-    }
-}
-
-export const logoutRequestAction = () => {
-    return {
-        type: 'LOG_OUT_REQUEST',
-    }
-}
-
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'SOCIAL_LOG_IN_REQUEST':
-            return {
-                ...state,
-                accessToken: action.accessToken,
-                platform: action.platform,
-            }
-            case 'LOG_IN_SUCCESS':
-            return {
-                ...state,
-                userId: action.data.userId,
-                nickname: action.data.userNickname,
-                userToken: action.data.userToken,
-            };
-        case 'LOG_OUT_REQUEST':
-            return {
-                ...state,
-                userId: null,
-                nickname: null,
-                userToken: null,
-                accessToken: null,
-                platform: null,
-            };
-        default:
-            return state;
+    logInLoading: false,
+    logInDone: false,
+    logInError: null,
+    logOutLoading: false,
+    logOutDone: false,
+    logInError: null,
+    me: {
+        userId: null,
+        nickname: null,
+        userToken: null,
+        accessToken: null,
+        platform: null,
     }
 };
+
+export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const LOG_IN_FAILURE = 'LOG_IN_SUCCESS';
+
+export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+
+
+export const loginRequestAction = (data) => ({
+    type: LOG_IN_REQUEST,
+    data,
+});
+
+export const logoutRequestAction = () => ({
+    type: LOG_OUT_REQUEST,
+});
+
+const reducer = (state = initialState, action) => produce(state, (draft) => {
+    switch (action.type) {
+        case LOG_IN_REQUEST:
+            draft.logInLoading = true;
+            draft.logInError = null;
+            draft.logInDone = false;
+            draft.me.accessToken = action.data.accessToken;
+            draft.me.platform = action.data.platform;
+            break;
+        case LOG_IN_SUCCESS:
+            draft.logInLoading = false;
+            draft.logInError = null;
+            draft.logInDone = true;
+            draft.me.userId = action.data.userId;
+            draft.me.nickname = action.data.nickname;
+            draft.me.userToken = action.data.userToken;
+            break;
+        case LOG_IN_FAILURE:
+            draft.logInLoading = false;
+            draft.logInError = action.error;
+            break;
+        case LOG_OUT_REQUEST:
+            draft.logOutLoading = true;
+            draft.logOutError = null;
+            draft.logOutDone = false;
+            break;
+        case LOG_OUT_SUCCESS:
+            draft.logOutLoading = false;
+            draft.logOutDone = true;
+            draft.me.userId = null;
+            draft.me.nickname = null;
+            draft.me.userToken = null;
+            draft.me.accessToken = null;
+            draft.me.platform = null;
+            break;
+        case LOG_OUT_FAILURE:
+            draft.logOutLoading = false;
+            draft.logOutError = action.error;
+            break;
+        default:
+            break;
+    }
+});
 
 export default reducer;

@@ -2,15 +2,16 @@ import React, { useCallback } from 'react';
 import { Card, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link'
+import { logoutRequestAction } from '../reducers/user'
 const UserProfile = () => {
 
-    const nickname = useSelector((state) => state.user.nickname)
+    const { nickname } = useSelector((state) => state.user.me)
     const dispatch = useDispatch();
     const onClickLogout = useCallback(() => {
-        dispatch(logoutAction());
+        dispatch(logoutRequestAction());
     }, []);
 
-    
+
     return (
         <>
             <Card
@@ -28,5 +29,4 @@ const UserProfile = () => {
         </>
     );
 }
-
 export default UserProfile;
