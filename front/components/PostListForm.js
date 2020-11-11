@@ -18,6 +18,4 @@ const PostListForm = () => {
     );
 }
 
-
-
 export default PostListForm;
