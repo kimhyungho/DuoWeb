@@ -7,6 +7,9 @@ export const initialState = {
     logOutLoading: false,
     logOutDone: false,
     logInError: null,
+    signUpLoading: false,
+    signUpDone: false,
+    signUpError: null,
     me: {
         userId: null,
         nickname: null,
@@ -18,11 +21,15 @@ export const initialState = {
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
-export const LOG_IN_FAILURE = 'LOG_IN_SUCCESS';
+export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+
+export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
 
 export const loginRequestAction = (data) => ({
@@ -34,14 +41,19 @@ export const logoutRequestAction = () => ({
     type: LOG_OUT_REQUEST,
 });
 
+export const signUpRequestAction = (data) => ({
+    type: SIGN_UP_REQUEST,
+    data,
+});
+
 const reducer = (state = initialState, action) => produce(state, (draft) => {
     switch (action.type) {
         case LOG_IN_REQUEST:
             draft.logInLoading = true;
             draft.logInError = null;
             draft.logInDone = false;
-            draft.me.accessToken = action.data.accessToken;
-            draft.me.platform = action.data.platform;
+            draft.me.accessToken = action.data;
+            draft.me.platform = action.data;
             break;
         case LOG_IN_SUCCESS:
             draft.logInLoading = false;
@@ -69,9 +81,22 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
             draft.me.accessToken = null;
             draft.me.platform = null;
             break;
-        case LOG_OUT_FAILURE:
-            draft.logOutLoading = false;
-            draft.logOutError = action.error;
+        case SIGN_UP_REQUEST:
+            draft.me.userId = action.data.userId;
+            draft.me.nickname = action.data.nickname;
+            draft.me.userToken = action.data.userToken;
+            draft.signUpLoading = true;
+            draft.signUpError = null;
+            draft.signUpDone = false;
+            break;
+        case SIGN_UP_SUCCESS:
+            draft.logInError = null;
+            draft.signUpLoading = false;
+            draft.signUpDone = true;
+            break;
+        case SIGN_UP_FAILURE:
+            draft.signUpLoading = false;
+            draft.signUpError = action.error;
             break;
         default:
             break;

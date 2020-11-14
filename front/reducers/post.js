@@ -11,6 +11,7 @@ export const LOAD_ALL_LOL_POSTS_REQUEST = 'LOAD_ALL_LOL_POSTS_REQUEST';
 export const LOAD_ALL_LOL_POSTS_SUCCESS = 'LOAD_ALL_LOL_POSTS_SUCCESS';
 export const LOAD_ALL_LOL_POSTS_FAILURE = 'LOAD_ALL_LOL_POSTS_FAILURE';
 
+
 export const loadAllLolPostsRequestAction = (data) => ({
     type: LOAD_ALL_LOL_POSTS_REQUEST,
     data,   // userToken

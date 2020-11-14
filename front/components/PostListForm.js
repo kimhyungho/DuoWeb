@@ -8,12 +8,11 @@ const PostListForm = () => {
     const { userId } = useSelector((state) => state.user.me);
     const { posts } = useSelector((state) => state.post);
 
+    
+
     return (
         <>
-            {userId
-                ? posts.map((c) => { return (<div onClick={postRequest}><LolPostCard key={c.id} post={c} /></div>); })
-                : <div>로그인이 필요합니다.</div>
-            }
+            
         </>
     );
 }

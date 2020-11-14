@@ -15,12 +15,12 @@ const LoginWrapper = styled(Form)`
 const LoginFrom = () => {
 
     const dispatch = useDispatch();
-
     const responseKakao = (response) => {
         console.log(response.response.access_token);
         const data = { accessToken: response.response.access_token, platform: 'kakao' };
         dispatch(loginRequestAction(data));
     };
+
 
     // const responseNaver = (response) => {
     //     if (typeof window !== 'undefined') {

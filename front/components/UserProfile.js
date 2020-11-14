@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { logoutRequestAction } from '../reducers/user'
 const UserProfile = () => {
 
-    const { nickname } = useSelector((state) => state.user.me)
+    const { nickname } = useSelector((state) => state.user.me);ㄴ
+
     const dispatch = useDispatch();
     const onClickLogout = useCallback(() => {
         dispatch(logoutRequestAction());
