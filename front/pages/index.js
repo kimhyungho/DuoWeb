@@ -2,15 +2,27 @@ import { Button } from 'antd';
 import React, { useEffect } from 'react';
 import AppLayout from '../components/AppLayout';
 import Link from 'next/link';
-import PostListForm from '../components/PostListForm';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import SignUpForm from '../components/SignUpForm';
+import { loadAllLolPostsRequestAction } from '../reducers/post';
+import PostCard from '../components/LolPostCard'
+import LoginFrom from '../components/LoginForm';
 
 
 const Home = () => {
-    const { userId } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const { me } = useSelector((state) => state.user);
     const { logInError } = useSelector((state) => state.user);
-    const { posts, loadPostLoading, loadPostDone, loadPostError } = useSelector((state) => state.post);
+    const { posts, loadPostLoading, loadPostError } = useSelector((state) => state.post);
+    
+    useEffect(() => {
+        if(!me.userToken){
+            console.log("kkk");
+            const data = {userToken: me.userToken}
+            dispatch(loadAllLolPostsRequestAction(data));
+        }
+      }, []);
+
 
     if (logInError === -401) {
         return (
@@ -21,17 +33,9 @@ const Home = () => {
     } else {
         return (
             <AppLayout>
-                {userId
-                    ? posts.map((c) => {
-                        return (
-                            <div>
-                                <Button type="primary" style={{ marginLeft: '20px' }}><Link href="./lol_write"><a>글쓰기</a></Link></Button>
-                                <br />
-                                <LolPostCard key={c.id} post={c} />
-                            </div>);
-                    })
-                    : <div>로그인이 필요합니다.</div>
-                }
+                <Button type="primary" style={{ marginLeft: '20px' }}><Link href="./lol_write"><a>글쓰기</a></Link></Button>
+                <br/>
+                {me.userToken && posts.map((post) => <PostCard key={post.id} post={post}/>)}
             </AppLayout>
         );
     }

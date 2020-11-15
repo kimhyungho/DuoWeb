@@ -1,14 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import { Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginRequestAction } from '../reducers/user';
+import { signUpRequestAction } from '../reducers/user';
 
 const SignUpForm = () => {
 
 
     const dispatch = useDispatch();
-    const { accessToken, platform } = useSelector((state) => state.user)
+    const { me } = useSelector((state) => state.user);
     const [nickname, setNickname] = useState('');
+    const { signUpLoading, signUpError } = useSelector((state) => state.user);
+
 
     const onChangeNickname = useCallback((e) => {
         setNickname(e.target.value);
@@ -16,9 +18,8 @@ const SignUpForm = () => {
 
 
     const onSubmit = useCallback(() => {
-        console.log(accessToken, platform, nickname);
-        const data = { accessToken: accessToken, platform: platform, nickname: nickname };
-        dispatch(loginRequestAction(data));
+        const data = { accessToken: me.accessToken, platform: me.platform, nickname: nickname };
+        dispatch(signUpRequestAction(data));
     });
 
     return (
@@ -29,6 +30,7 @@ const SignUpForm = () => {
                 addonBefore="닉네임"
                 enterButton="회원가입"
                 onSearch={onSubmit}
+                loading={signUpLoading}
             />
         </Form>
 

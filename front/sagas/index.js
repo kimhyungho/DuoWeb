@@ -7,10 +7,12 @@ import { all, fork} from 'redux-saga/effects';
 // throttle nms 동안 한번만 요청 함
 
 import userSaga from './user';
+import postSaga from './post';
 
 
 export default function* rootSaga() {
     yield all([                             // root 사가 만들고 만들고 싶은 비동기 액션 넣어줌
         fork(userSaga),
+        fork(postSaga),
     ]);
 }

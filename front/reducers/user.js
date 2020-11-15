@@ -52,8 +52,8 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
             draft.logInLoading = true;
             draft.logInError = null;
             draft.logInDone = false;
-            draft.me.accessToken = action.data;
-            draft.me.platform = action.data;
+            draft.me.accessToken = action.data.accessToken;
+            draft.me.platform = action.data.platform;
             break;
         case LOG_IN_SUCCESS:
             draft.logInLoading = false;

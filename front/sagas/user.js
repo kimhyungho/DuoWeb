@@ -24,7 +24,7 @@ function* logIn(action) {
         console.log(result);
         yield put({
             type: LOG_IN_SUCCESS,
-            data: result.data
+            data: result.data,
         });
     } catch (err) {
         yield put({
@@ -53,7 +53,7 @@ function signUpAPI(data) {
         { nickname: data.nickname }, { headers: { Authorization: data.accessToken } });
 }
 
-function* signUp() {
+function* signUp(action) {
     try {
         const result = yield call(signUpAPI, action.data);
         yield put({
@@ -61,7 +61,7 @@ function* signUp() {
             data: result.data,
         });
     } catch (err) {
-        console.error(err.response.data);
+        console.log(err.response.data.code);
         yield put({
             type: SIGN_UP_FAILURE,
             error: err.response.data,
