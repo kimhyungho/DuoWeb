@@ -4,15 +4,13 @@ import Link from 'next/link';
 import { Menu, Row, Col } from 'antd';            // https://ant.design/components/menu/
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { Button } from 'antd';
 
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
-import Logo from '../images/logo.png';
+import Black_logo from '../images/Black_logo.png';
 
 const { SubMenu } = Menu;
-const LogoTab = styled.div`
-
-`;
 
 const AppLayout = ({ children }) => {
 
@@ -20,7 +18,10 @@ const AppLayout = ({ children }) => {
 
     return (
         <div>
-            <LogoTab><img src={Logo}></img></LogoTab>
+            <div style={{ margin: 20, display: "block" }}>
+                <img src={Black_logo} height={30}></img>
+                <Button type="primary" style={{ float: "right" }}><Link href='/login'><a>로그인</a></Link></Button>
+                </div>
             <Menu mode="horizontal" >
                 <SubMenu title="게임목록">
                     <Menu.Item key="lol"><Link href="/"><a>리그오브레전드</a></Link></Menu.Item>
@@ -32,7 +33,7 @@ const AppLayout = ({ children }) => {
             </Menu>
             <Row>
                 <Col xs={24} md={5} >
-                    {userId ? <UserProfile /> : <LoginForm />}
+                    {userId ? <UserProfile /> : <></>}
                 </Col>
 
                 <Col xs={24} md={18} >
