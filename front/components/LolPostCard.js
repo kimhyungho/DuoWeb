@@ -29,6 +29,7 @@ const LolPostCard = ({ post }) => {
         dispatch(loadCommentsRequestAction(data));
     }, []);
 
+
     function tierToString(tier) {
         switch(tier){
             case 1 : return "상관없음"

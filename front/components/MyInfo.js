@@ -1,8 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Input, Form } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutRequestAction, signOutRequestAction } from '../reducers/user';
+
 
 const MyInfo = () => {
+
+    const { me, signOutLoading, signOutDone } = useSelector((state) => state.user)
+    const dispatch = useDispatch();
+
     const {nickname} = useSelector((state) => state.user);
     const [isChangeNickname, setIsChangeNickname] = useState(false);
 
@@ -12,13 +18,23 @@ const MyInfo = () => {
     });
 
     const onCompelteChangeNickname = useCallback(() => {
-        // 받아와서 Nickname state 변경
         setIsChangeNickname(false)
     });
 
     const onSetNickname = useCallback((e) => {
         setNickname(e.target.value)
     });
+
+    const onSignOut = useCallback(() => {
+        const data = { uesrId: me.userId, userToken: me.userToken};
+        dispatch(signOutRequestAction(data));
+    }, []);
+
+    useEffect(() => {
+        if (signOutDone) {
+            dispatch(logoutRequestAction());
+        }
+    }, [signOutDone]);
 
     return (
         <>
@@ -28,7 +44,7 @@ const MyInfo = () => {
                 </Form>
                 : <Input prefix={userNickname} suffix={<Button onClick={onIsChangeNickname}>변경</Button>} disabled />}
 
-            <Button>회원탈퇴</Button>
+            <Button loading={signOutLoading} onClick={onSignOut}>회원탈퇴</Button>
         </>
     );
 }

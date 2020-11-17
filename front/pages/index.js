@@ -11,16 +11,15 @@ import DetailPost from '../components/DetailPost';
 const Home = () => {
     const dispatch = useDispatch();
     const { me } = useSelector((state) => state.user);
-    const { logInError } = useSelector((state) => state.user);
+    const { logInError, logInDone } = useSelector((state) => state.user);
     const { posts, loadPostLoading, loadPostError, detailLolPost, detailLolPostOn } = useSelector((state) => state.post);
 
     useEffect(() => {
-        if (!me.userToken) {
-            const data = { userToken: me.userToken }
+        const data = { userToken: me.userToken }
+        if (logInDone) {
             dispatch(loadAllLolPostsRequestAction(data));
         }
-    }, []);
-
+    }, [logInDone]);
 
     if (logInError === -401) {
         return (

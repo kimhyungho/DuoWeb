@@ -10,6 +10,9 @@ export const initialState = {
     signUpLoading: false,
     signUpDone: false,
     signUpError: null,
+    signOutLoading: false,
+    signOutDone: false,
+    signOutError: null,
     me: {
         userId: null,
         nickname: null,
@@ -31,6 +34,10 @@ export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
+export const SIGN_OUT_REQUEST = 'SIGN_OUT_REQUEST';
+export const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS';
+export const SIGN_OUT_FAILURE = 'SIGN_OUT_FAILURE';
+
 
 export const loginRequestAction = (data) => ({
     type: LOG_IN_REQUEST,
@@ -43,6 +50,11 @@ export const logoutRequestAction = () => ({
 
 export const signUpRequestAction = (data) => ({
     type: SIGN_UP_REQUEST,
+    data,
+});
+
+export const signOutRequestAction = (data) => ({
+    type: SIGN_OUT_REQUEST,
     data,
 });
 
@@ -97,6 +109,19 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
         case SIGN_UP_FAILURE:
             draft.signUpLoading = false;
             draft.signUpError = action.error;
+            break;
+        case SIGN_OUT_REQUEST:
+            draft.signOutLoading = true;
+            draft.signOutError = null;
+            draft.signOutDone = false;
+            break;
+        case SIGN_OUT_SUCCESS:
+            draft.signOutLoading = false;
+            draft.signOutDone = true;
+            break;
+        case SIGN_OUT_FAILURE:
+            draft.signOutLoading = false;
+            draft.signOutError = action.error;
             break;
         default:
             break;

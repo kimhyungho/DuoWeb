@@ -21,6 +21,7 @@ const DetailPost = () => {
         dispatch(emptyCommentsRequestAction());
     }
 
+
     return (
         <Frame style={{ width: '100%', padding: '20px' }}>
             <Button style={{ width: '100%' }} onClick={onClose} type="primary">닫기</Button>
@@ -33,12 +34,15 @@ const DetailPost = () => {
                 itemLayout="horizontal"
                 dataSource={comments}
                 renderItem={(item) => (
-                    <li>
-                        <Comment
-                            author={item.nickname}
-                            content={item.content}
-                        />
-                    </li>
+                    <>
+                        <li>
+                            <Comment
+                                author={item.nickname}
+                                content={item.content}
+                            />
+                        </li>
+                        
+                    </>
                 )}
             >
             </List>

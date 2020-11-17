@@ -11,6 +11,9 @@ import {
     SIGN_UP_REQUEST,
     SIGN_UP_SUCCESS,
     SIGN_UP_FAILURE,
+    SIGN_OUT_REQUEST,
+    SIGN_OUT_SUCCESS,
+    SIGN_OUT_FAILURE,
 } from '../reducers/user';
 
 function loginAPI(data) {
@@ -70,6 +73,25 @@ function* signUp(action) {
 }
 
 
+function signOutAPI(data) {
+    return axios.delete(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/auth`,
+        { userId: data.userId }, { headers: { Authorization: data.userToken } });
+}
+
+function* signOut(action) {
+    try {
+        const result = yield call(signOutAPI, action.data);
+        yield put({
+            type: SIGN_OUT_SUCCESS,
+        });
+    } catch (err) {
+        console.log(err.response.data.code);
+        yield put({
+            type: SIGN_OUT_FAILURE,
+            error: err.response.data,
+        });
+    }
+}
 
 function* watchLogIn() {
     yield takeLatest(LOG_IN_REQUEST, logIn);
@@ -83,10 +105,15 @@ function* watchSignUp() {
     yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
 
+function* watchSignOut() {
+    yield takeLatest(SIGN_OUT_REQUEST, signOut);
+}
+
 export default function* userSaga() {
     yield all([
         fork(watchLogIn),
         fork(watchLogOut),
         fork(watchSignUp),
+        fork(watchSignOut),
     ]);
 }

@@ -1,14 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Form, Input, Select, Checkbox, Radio } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { addLolPostRequestAction } from '../reducers/post'
-import { setTwoToneColor } from '@ant-design/icons/lib/components/twoTonePrimaryColor';
+import { addLolPostRequestAction, loadAllLolPostsRequestAction } from '../reducers/post'
+import Router from 'next/router';
 
 const LolWriteFrom = () => {
 
     const { me } = useSelector((state) => state.user);
+    const {addLolPostDone, addLolPostLoading} = useSelector((state) => state.post);
     const dispatch = useDispatch();
 
+    const [isDoneAddPost, setIsDoneAddPost] = useState(false);
     const [gameMode, setGameMode] = useState(null);
     const [headcount, setHeadcount] = useState(null);
     const [startTier, setStartTier] = useState(null);
@@ -76,10 +78,17 @@ const LolWriteFrom = () => {
         setContent(e.target.value)
     });
 
-
+    useEffect(() => {
+        const data = { userToken: me.userToken }
+        if (addLolPostDone && isDoneAddPost) {
+            dispatch(loadAllLolPostsRequestAction(data));
+            Router.push('/');
+        }
+    }, [addLolPostDone, isDoneAddPost]);
 
 
     const onSubmit = useCallback(() => {
+        setIsDoneAddPost(true);
         var mTop, mJungle, mMid, mBottom, mSupport;
         var newDate = new Date();
         newDate.setMinutes(newDate.getMinutes() + endTime);
@@ -110,7 +119,7 @@ const LolWriteFrom = () => {
             content: content, talkOn: talkOn,
         };
         dispatch(addLolPostRequestAction(data));
-    }, [gameMode, headcount, startTier, endTier, endTime, top, jungle, mid, bottom, support, talkOn, title, content]);
+    }, [gameMode, headcount, startTier, endTier, endTime, top, jungle, mid, bottom, support, talkOn, title, content, isDoneAddPost]);
 
     return (
         <>
@@ -243,7 +252,7 @@ const LolWriteFrom = () => {
                     <br />
                     <Input placeholder={'제목'} onChange={onSetTitle} style={{ marginBottom: '20px' }}></Input>
                     <Input.TextArea placeholder={'내용'} onChange={onSetContent} style={{ height: '200px' }}></Input.TextArea>
-                    <Button type="primary" onClick={onSubmit}>제출</Button>
+                    <Button type="primary" loading={addLolPostLoading} onClick={onSubmit}>제출</Button>
                 </Form>
                 : <div>글쓰기 - 로그인이 필요한 페이지입니다</div>}
 
