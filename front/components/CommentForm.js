@@ -1,7 +1,11 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 
-const CommentForm = ({ data }) => {
+const CommentForm = ({postId}) => {
+    
+
+
+
     return (
         <>
             <Form>

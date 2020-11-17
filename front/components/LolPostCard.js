@@ -23,7 +23,6 @@ const LolPostCard = ({ post }) => {
     const [more, setMore] = useState(false);
     const onClickMore = useCallback(() => {
         setMore(true);
-
     }, []);
     const onClickClose = useCallback(() => {
         setMore(false);
@@ -32,7 +31,7 @@ const LolPostCard = ({ post }) => {
 
     return (
         <>
-            {more ? <DetailPost onClose={onClickClose} data={posts} /> : <CardWrapper key={post.id}>
+            {more ? <DetailPost onClose={onClickClose} data={post} /> : <CardWrapper key={post.id}>
                 <Card
                     actions={[<ArrowDownOutlined key="more" onClick={onClickMore} />]}
                     bordered={true}

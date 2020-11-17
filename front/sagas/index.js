@@ -8,11 +8,13 @@ import { all, fork} from 'redux-saga/effects';
 
 import userSaga from './user';
 import postSaga from './post';
+import commentSaga from './comment';
 
 
 export default function* rootSaga() {
     yield all([                             // root 사가 만들고 만들고 싶은 비동기 액션 넣어줌
         fork(userSaga),
         fork(postSaga),
+        fork(commentSaga),
     ]);
 }

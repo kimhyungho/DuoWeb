@@ -8,7 +8,7 @@ export const initialState = {
     loadPostError: null,
     addLolPostLoading: false,
     addLolPostDone: false,
-    addLolPostError: false,
+    addLolPostError: null,
 };
 
 export const LOAD_ALL_LOL_POSTS_REQUEST = 'LOAD_ALL_LOL_POSTS_REQUEST';

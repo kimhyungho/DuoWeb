@@ -18,7 +18,7 @@ function loadAllLolPostsAPI(data) {
 function* loadAllLolPosts(action) {
     try {
         const result = yield call(loadAllLolPostsAPI, action.data);
-        console.log(result);
+        console.log(action.data);
         yield put({
             type: LOAD_ALL_LOL_POSTS_SUCCESS,
             data: result.data,
@@ -36,29 +36,30 @@ function* loadAllLolPosts(action) {
 function addLolPostAPI(data) {
     return axios.post(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/post/lol`,
         {   userNickname: data.userNickname, userId: data.userId,
-            gameMode: data.gameMode, title: data.gameMode, 
+            gameMode: data.gameMode, title: data.title,
             startTier: data.startTier, endTier: data.endTier,
             endTime: data.endTime, headCount: data.headCount,
             top: data.top, bottom: data.bottom,
             mid: data.mid, jungle: data.jungle, 
-            support: data.support, content: data.contnet, 
-            talkon: data.talkon,
+            support: data.support, content: data.content, 
+            talkon: data.talkOn,
         }, { headers: { Authorization: data.userToken } });
-}
+};
 
 function* addLolPost(action) {
     try {
         const result = yield call(addLolPostAPI, action.data);
-        console.log(result);
+        console.log(result)
+
         yield put({
             type: ADD_LOL_POST_SUCCESS,
             data: result.data,
         });
     } catch (err) {
-        console.log(err);
+        console.log(err.response);
         yield put({
             type: ADD_LOL_POST_FAILURE,
-            error: err.response.data,
+            error: err.response,
         });
     }
 }
