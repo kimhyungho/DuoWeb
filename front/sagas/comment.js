@@ -8,14 +8,14 @@ import {
 } from '../reducers/comment';
 
 function loadCommentsAPI(data) {
-    return axios.get(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/comment/lol?{query}`,
-        { postId: data.postId }, { headers: { Authorization: data.userToken } });
+    return axios.get(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/comment/lol?postId=${data.postId}`,
+        {}, { headers: { Authorization: data.userToken }});
 }
 
 function* loadComments(action) {
     try {
         const result = yield call(loadCommentsAPI, action.data);
-        console.log(action.data);
+        console.log(result);
         yield put({
             type: LOAD_COMMENTS_SUCCESS,
             data: result.data,

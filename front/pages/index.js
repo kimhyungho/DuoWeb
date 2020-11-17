@@ -6,16 +6,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import SignUpForm from '../components/SignUpForm';
 import { loadAllLolPostsRequestAction } from '../reducers/post';
 import PostCard from '../components/LolPostCard'
+import DetailPost from '../components/DetailPost';
 
 const Home = () => {
     const dispatch = useDispatch();
     const { me } = useSelector((state) => state.user);
     const { logInError } = useSelector((state) => state.user);
-    const { posts, loadPostLoading, loadPostError } = useSelector((state) => state.post);
+    const { posts, loadPostLoading, loadPostError, detailLolPost, detailLolPostOn } = useSelector((state) => state.post);
 
     useEffect(() => {
         if (!me.userToken) {
-            console.log("kkk");
             const data = { userToken: me.userToken }
             dispatch(loadAllLolPostsRequestAction(data));
         }
@@ -36,7 +36,8 @@ const Home = () => {
                     <Button type="primary" style={{ marginLeft: '20px' }}><Link href="./lol_write"><a>글쓰기</a></Link></Button>
                 </div>
                 <br />
-                {me.userToken && posts.map((post) => <PostCard key={post.id} post={post} />)}
+                {me.userToken && !detailLolPostOn && posts.map((post) => <PostCard key={post.id} post={post} />)}
+                {me.userToken && detailLolPostOn && <DetailPost/>}
             </AppLayout>
         );
     }

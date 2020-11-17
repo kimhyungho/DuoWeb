@@ -11,9 +11,16 @@ export const LOAD_COMMENTS_REQUEST = 'LOAD_COMMENTS_REQUEST';
 export const LOAD_COMMENTS_SUCCESS = 'LOAD_COMMENTS_SUCCESS';
 export const LOAD_COMMENTS_FAILURE = 'LOAD_COMMENTS_FAILURE';
 
+export const EMPTY_COMMENTS_REQUEST = 'EMPTY_COMMENTS_REQUEST';
+
 export const loadCommentsRequestAction = (data) => ({
     type: LOAD_COMMENTS_REQUEST,
     data,
+});
+
+
+export const emptyCommentsRequestAction = () => ({
+    type: EMPTY_COMMENTS_REQUEST
 });
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
@@ -31,6 +38,9 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
         case LOAD_COMMENTS_FAILURE:
             draft.loadCommentsLoading = false;
             draft.loadCommentsError = action.error;
+            break;
+        case EMPTY_COMMENTS_REQUEST:
+            draft.comments = [];
             break;
         default:
             break;
