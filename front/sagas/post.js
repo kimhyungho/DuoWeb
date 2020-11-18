@@ -7,7 +7,10 @@ import {
     LOAD_ALL_LOL_POSTS_FAILURE,
     ADD_LOL_POST_REQUEST,
     ADD_LOL_POST_SUCCESS,
-    ADD_LOL_POST_FAILURE
+    ADD_LOL_POST_FAILURE,
+    DELETE_LOL_POST_REQUEST,
+    DELETE_LOL_POST_SUCCESS,
+    DELETE_LOL_POST_FAILURE,
 } from '../reducers/post';
 
 function loadAllLolPostsAPI(data) {
@@ -32,16 +35,16 @@ function* loadAllLolPosts(action) {
     }
 }
 
-
 function addLolPostAPI(data) {
     return axios.post(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/post/lol`,
-        {   userNickname: data.userNickname, userId: data.userId,
+        {
+            userNickname: data.userNickname, userId: data.userId,
             gameMode: data.gameMode, title: data.title,
             startTier: data.startTier, endTier: data.endTier,
             endTime: data.endTime, headCount: data.headCount,
             top: data.top, bottom: data.bottom,
-            mid: data.mid, jungle: data.jungle, 
-            support: data.support, content: data.content, 
+            mid: data.mid, jungle: data.jungle,
+            support: data.support, content: data.content,
             talkon: data.talkOn,
         }, { headers: { Authorization: data.userToken } });
 };
@@ -64,6 +67,29 @@ function* addLolPost(action) {
     }
 }
 
+function deleteLolPostAPI(data) {
+    return axios.delete(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/post/lol`,
+        { postId: data.postId, userId: data.userId }, { headers: { Authorization: data.userToken } });
+};
+
+function* deleteLolPost(action) {
+    try {
+        const result = yield call(deleteLolPostAPI, action.data);
+        console.log(result)
+
+        yield put({
+            type: DELETE_LOL_POST_SUCCESS,
+            data: result.data,
+        });
+    } catch (err) {
+        console.log(err.response);
+        yield put({
+            type: DELETE_LOL_POST_FAILURE,
+            error: err.response,
+        });
+    }
+}
+
 
 function* watchLoadAllLolPosts() {
     yield takeLatest(LOAD_ALL_LOL_POSTS_REQUEST, loadAllLolPosts);
@@ -73,9 +99,14 @@ function* watchAddLolPost() {
     yield takeLatest(ADD_LOL_POST_REQUEST, addLolPost);
 }
 
+function* watchDeleteLolPost() {
+    yield takeLatest(DELETE_LOL_POST_REQUEST, deleteLolPost);
+}
+
 export default function* postSaga() {
     yield all([
         fork(watchLoadAllLolPosts),
         fork(watchAddLolPost),
+        fork(watchDeleteLolPost),
     ]);
 }

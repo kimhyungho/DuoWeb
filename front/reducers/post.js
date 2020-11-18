@@ -9,6 +9,9 @@ export const initialState = {
     addLolPostLoading: false,
     addLolPostDone: false,
     addLolPostError: null,
+    deleteLolPostLoading: false,
+    deleteLolPostDone: false,
+    deleteLolPostError: null,
 
 
 
@@ -24,6 +27,10 @@ export const ADD_LOL_POST_REQUEST = 'ADD_LOL_POST_REQUEST';
 export const ADD_LOL_POST_SUCCESS = 'ADD_LOL_POST_SUCCESS';
 export const ADD_LOL_POST_FAILURE = 'ADD_LOL_POST_FAILURE';
 
+export const DELETE_LOL_POST_REQUEST = 'DELETE_LOL_POST_REQUEST';
+export const DELETE_LOL_POST_SUCCESS = 'DELETE_LOL_POST_SUCCESS';
+export const DELETE_LOL_POST_FAILURE = 'DELETE_LOL_POST_FAILURE';
+
 export const DETAIL_LOL_POST_ON = 'DETAIL_LOL_POST_ON';
 export const DETAIL_LOL_POST_OFF = 'DETAIL_LOL_POST_OFF';
 
@@ -37,6 +44,16 @@ export const addLolPostRequestAction = (data) => ({
     data,
 });
 
+
+export const deleteLolPostRequestAction = (data) => ({
+    type: DELETE_LOL_POST_REQUEST,
+    data,
+});
+
+
+
+
+
 export const detailLolPostOnAction = (data) => ({
     type: DETAIL_LOL_POST_ON,
     data,
@@ -45,6 +62,8 @@ export const detailLolPostOnAction = (data) => ({
 export const detailLolPostOffAction = () => ({
     type: DETAIL_LOL_POST_OFF,
 });
+
+
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
     switch (action.type) {
@@ -65,7 +84,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
         case ADD_LOL_POST_REQUEST:
             draft.addLolPostLoading = true;
             draft.addLolPostDone = false;
-            draft.loadPostError = null;
+            draft.addLolPostError = null;
             break;
         case ADD_LOL_POST_SUCCESS:
             draft.addLolPostLoading = false;
@@ -74,6 +93,19 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
         case ADD_LOL_POST_FAILURE:
             draft.addLolPostLoading = false;
             draft.addLolPostError = action.error;
+            break;
+        case DELETE_LOL_POST_REQUEST:
+            draft.deleteLolPostLoading = true;
+            draft.deleteLolPostDone = false;
+            draft.deleteLolPostError = null;
+            break;
+        case DELETE_LOL_POST_SUCCESS:
+            draft.deleteLolPostLoading = false;
+            draft.deleteLolPostDone = true;
+            break;
+        case DELETE_LOL_POST_FAILURE:
+            draft.deleteLolPostLoading = false;
+            draft.deleteLolPostError = action.error;
             break;
         case DETAIL_LOL_POST_ON:
             draft.detailLolPostOn = true;

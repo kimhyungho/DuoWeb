@@ -12,7 +12,10 @@ export const initialState = {
     signUpError: null,
     signOutLoading: false,
     signOutDone: false,
-    signOutError: null,
+    signOutError: null,    
+    changeNicknameLoading: false,
+    changeNicknameDone: false,
+    changeNicknameError: null,
     me: {
         userId: null,
         nickname: null,
@@ -38,6 +41,11 @@ export const SIGN_OUT_REQUEST = 'SIGN_OUT_REQUEST';
 export const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS';
 export const SIGN_OUT_FAILURE = 'SIGN_OUT_FAILURE';
 
+export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_REQUEST';
+export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
+export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
+
+
 
 export const loginRequestAction = (data) => ({
     type: LOG_IN_REQUEST,
@@ -57,6 +65,12 @@ export const signOutRequestAction = (data) => ({
     type: SIGN_OUT_REQUEST,
     data,
 });
+
+export const changeNicknameRequestAction = (data) => ({
+    type: CHANGE_NICKNAME_REQUEST,
+    data,
+});
+
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
     switch (action.type) {
@@ -122,6 +136,20 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
         case SIGN_OUT_FAILURE:
             draft.signOutLoading = false;
             draft.signOutError = action.error;
+            break;
+        case CHANGE_NICKNAME_REQUEST:
+            draft.changeNicknameLoading = true;
+            draft.changeNicknameDone = false;
+            draft.changeNicknameError = null;
+            break;
+        case CHANGE_NICKNAME_SUCCESS:
+            draft.changeNicknameLoading = false;
+            draft.changeNicknameDone = true;
+            draft.me.nickname = action.data.nickname;
+            break;
+        case CHANGE_NICKNAME_FAILURE:
+            draft.changeNicknameLoading = false;
+            draft.changeNicknameError = action.error;
             break;
         default:
             break;

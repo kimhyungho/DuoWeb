@@ -5,13 +5,15 @@ import CommentForm from './CommentForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailLolPostOffAction } from '../reducers/post';
 import { emptyCommentsRequestAction } from '../reducers/comment';
+import ButtonGroup from 'antd/lib/button/button-group';
 
 const Frame = styled.div`
     border: 1px solid #000000;
 `;
 
 const DetailPost = () => {
-
+    
+    const {me} = useSelector((state) => state.user);
     const { detailLolPost } = useSelector((state) => state.post);
     const { comments, loadCommentsLoading } = useSelector((state) => state.comment);
     const dispatch = useDispatch();
@@ -27,6 +29,7 @@ const DetailPost = () => {
             <Button style={{ width: '100%' }} onClick={onClose} type="primary">닫기</Button>
             <div style={{ fontSize: 20 }}>{detailLolPost.title}</div>
             <div>{detailLolPost.content}</div>
+            {me.userId === detailLolPost.userId && <ButtonGroup><Button>수정</Button><Button type="primary">삭제</Button></ButtonGroup>}
             <CommentForm />
             <List
                 loading={loadCommentsLoading}

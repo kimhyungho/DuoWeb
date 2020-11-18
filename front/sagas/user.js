@@ -14,6 +14,9 @@ import {
     SIGN_OUT_REQUEST,
     SIGN_OUT_SUCCESS,
     SIGN_OUT_FAILURE,
+    CHANGE_NICKNAME_REQUEST,
+    CHANGE_NICKNAME_SUCCESS,
+    CHANGE_NICKNAME_FAILURE,
 } from '../reducers/user';
 
 function loginAPI(data) {
@@ -36,7 +39,6 @@ function* logIn(action) {
         });
     }
 }
-
 
 function* logOut() {
     try {
@@ -74,21 +76,44 @@ function* signUp(action) {
 
 
 function signOutAPI(data) {
-    return axios.delete(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/auth`,
-        { userId: data.userId }, { headers: { Authorization: data.userToken } });
-}
+    return axios.delete('http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/auth', { userId: data.userId}, { headers: { Authorization: data.userToken } });
 
+}
 function* signOut(action) {
     try {
+        console.log(action.data)
         const result = yield call(signOutAPI, action.data);
         yield put({
             type: SIGN_OUT_SUCCESS,
+            data: result.data,
         });
     } catch (err) {
-        console.log(err.response.data.code);
+        console.log(err);
         yield put({
             type: SIGN_OUT_FAILURE,
-            error: err.response.data,
+            error: err.response,
+        });
+    }
+}
+
+
+function changeNicknameAPI(data) {
+    return axios.put('http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/auth', { userId: data.userId, nickname: data.nickname }, { headers: { Authorization: data.userToken } });
+}
+
+function* changeNickname(action) {
+    try {
+        const result = yield call(changeNicknameAPI, action.data);
+        console.log(result);
+        yield put({
+            type: CHANGE_NICKNAME_SUCCESS,
+            data: action.data,
+        });
+    } catch (err) {
+        console.log(err);
+        yield put({
+            type: CHANGE_NICKNAME_FAILURE,
+            error: err.response,
         });
     }
 }
@@ -109,11 +134,16 @@ function* watchSignOut() {
     yield takeLatest(SIGN_OUT_REQUEST, signOut);
 }
 
+function* wathchChangeNickname() {
+    yield takeLatest(CHANGE_NICKNAME_REQUEST, changeNickname);
+}
+
 export default function* userSaga() {
     yield all([
         fork(watchLogIn),
         fork(watchLogOut),
         fork(watchSignUp),
-        fork(watchSignOut),
+        fork(watchSignOut), // check error,
+        fork(wathchChangeNickname),
     ]);
 }

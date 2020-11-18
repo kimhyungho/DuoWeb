@@ -1,34 +1,36 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Input, Form } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutRequestAction, signOutRequestAction } from '../reducers/user';
+import { logoutRequestAction, signOutRequestAction, changeNicknameRequestAction } from '../reducers/user';
 
 
 const MyInfo = () => {
 
-    const { me, signOutLoading, signOutDone } = useSelector((state) => state.user)
+    const { me, signOutLoading, signOutDone, changeNicknameDone, changeNicknameLoading } = useSelector((state) => state.user)
     const dispatch = useDispatch();
 
-    const {nickname} = useSelector((state) => state.user);
+    const [newNickname, setNewNickname] = useState(me.nickname);
     const [isChangeNickname, setIsChangeNickname] = useState(false);
 
-    const [userNickname, setNickname] = useState(nickname);
+    const onSetNewNickname = useCallback((e) => {
+        setNewNickname(e.target.value);
+    }, []);
+
     const onIsChangeNickname = useCallback(() => {
-        setIsChangeNickname(true)
-    });
+        setIsChangeNickname(!isChangeNickname);
+    }, []);
 
-    const onCompelteChangeNickname = useCallback(() => {
-        setIsChangeNickname(false)
-    });
-
-    const onSetNickname = useCallback((e) => {
-        setNickname(e.target.value)
-    });
 
     const onSignOut = useCallback(() => {
-        const data = { uesrId: me.userId, userToken: me.userToken};
+        const data = { userId: me.userId, userToken: me.userToken };
         dispatch(signOutRequestAction(data));
     }, []);
+
+    const onChangeNickname = useCallback(() => {
+        const data = { userId: me.userId, nickname: newNickname, userToken: me.userToken };
+        dispatch(changeNicknameRequestAction(data));
+        setIsChangeNickname(!isChangeNickname);
+    }, [newNickname]);
 
     useEffect(() => {
         if (signOutDone) {
@@ -40,13 +42,12 @@ const MyInfo = () => {
         <>
             {isChangeNickname
                 ? <Form>
-                    <Input onChange={onSetNickname} type="text" suffix={<Button onClick={onCompelteChangeNickname} htmlType="submit" type="primary">확인</Button>} />
+                    <Input onChange={onSetNewNickname} type="text" suffix={<Button onClick={onChangeNickname} loading={changeNicknameLoading} type="primary">확인</Button>} />
                 </Form>
-                : <Input prefix={userNickname} suffix={<Button onClick={onIsChangeNickname}>변경</Button>} disabled />}
+                : <Input prefix={me.nickname} suffix={<Button onClick={onIsChangeNickname}>변경</Button>} disabled />}
 
             <Button loading={signOutLoading} onClick={onSignOut}>회원탈퇴</Button>
         </>
     );
 }
-// <Form><Input prefix={userNickname} suffix={<Button onClick={onCompelteChangeNickname} htmlType="submit"></Button>}></Input> </Form>
 export default MyInfo;
