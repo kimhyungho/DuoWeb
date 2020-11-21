@@ -84,7 +84,7 @@ const LolPostCard = ({ post }) => {
                                 {post.jungle === 1 && <Tag color='#424242'>정글</Tag>}
                                 {post.mid === 1 && <Tag color='#424242'>미드</Tag>}
                                 {post.bottom === 1 && <Tag color='#424242'>바텀</Tag>}
-                                {post.supprot === 1 && <Tag color='#424242'>서폿</Tag>}
+                                {post.support === 1 && <Tag color='#424242'>서폿</Tag>}
                                 <br/>
                                 {post.endTime}
                             </>

@@ -12,8 +12,9 @@ export const initialState = {
     deleteLolPostLoading: false,
     deleteLolPostDone: false,
     deleteLolPostError: null,
-
-
+    updateLolPostLoading: false,
+    updateLolPostDone: false,
+    updateLolPostError: null,
 
     detailLolPostOn: false,
     detailLolPost: null,
@@ -30,6 +31,10 @@ export const ADD_LOL_POST_FAILURE = 'ADD_LOL_POST_FAILURE';
 export const DELETE_LOL_POST_REQUEST = 'DELETE_LOL_POST_REQUEST';
 export const DELETE_LOL_POST_SUCCESS = 'DELETE_LOL_POST_SUCCESS';
 export const DELETE_LOL_POST_FAILURE = 'DELETE_LOL_POST_FAILURE';
+
+export const UPDATE_LOL_POST_REQUEST = 'UPDATE_LOL_POST_REQUEST';
+export const UPDATE_LOL_POST_SUCCESS = 'UPDATE_LOL_POST_SUCCESS';
+export const UPDATE_LOL_POST_FAILURE = 'UPDATE_LOL_POST_FAILURE';
 
 export const DETAIL_LOL_POST_ON = 'DETAIL_LOL_POST_ON';
 export const DETAIL_LOL_POST_OFF = 'DETAIL_LOL_POST_OFF';
@@ -50,6 +55,10 @@ export const deleteLolPostRequestAction = (data) => ({
     data,
 });
 
+export const updateLolPostRequestAction = (data) => ({
+    type: UPDATE_LOL_POST_REQUEST,
+    data,
+});
 
 
 
@@ -106,6 +115,19 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
         case DELETE_LOL_POST_FAILURE:
             draft.deleteLolPostLoading = false;
             draft.deleteLolPostError = action.error;
+            break;
+        case UPDATE_LOL_POST_REQUEST:
+            draft.updateLolPostLoading = true;
+            draft.updateLolPostDone = false;
+            draft.updateLolPostError = null;
+            break;
+        case UPDATE_LOL_POST_SUCCESS:
+            draft.updateLolPostLoading = false;
+            draft.updateLolPostDone = true;
+            break;
+        case UPDATE_LOL_POST_FAILURE:
+            draft.updateLolPostLoading = false;
+            draft.updateLolPostError = action.error;
             break;
         case DETAIL_LOL_POST_ON:
             draft.detailLolPostOn = true;
