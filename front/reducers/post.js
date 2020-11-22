@@ -124,6 +124,17 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
         case UPDATE_LOL_POST_SUCCESS:
             draft.updateLolPostLoading = false;
             draft.updateLolPostDone = true;
+            draft.detailLolPost.top = action.data2.top;
+            draft.detailLolPost.jungle = action.data2.jungle;
+            draft.detailLolPost.mid = action.data2.mid;
+            draft.detailLolPost.bottom = action.data2.bottom;
+            draft.detailLolPost.support = action.data2.support;
+            draft.detailLolPost.endTime = action.data2.endTime;
+            draft.detailLolPost.headCount = action.data2.headCount;
+            draft.detailLolPost.gameMode = action.data2.gameMode;
+            draft.detailLolPost.title = action.data2.title;
+            draft.detailLolPost.content = action.data2.content;
+            draft.detailLolPost.talkOn = action.data2.talkOn;
             break;
         case UPDATE_LOL_POST_FAILURE:
             draft.updateLolPostLoading = false;

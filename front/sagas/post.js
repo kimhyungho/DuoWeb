@@ -116,6 +116,7 @@ function* updateLolPost(action) {
         yield put({
             type: UPDATE_LOL_POST_SUCCESS,
             data: result.data,
+            data2: action.data,
         });
     } catch (err) {
         console.log(err.response);

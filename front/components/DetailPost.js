@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { Button, List, Comment, Popover, Popconfirm } from 'antd';
 import styled from 'styled-components';
 import CommentForm from './CommentForm';
-import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailLolPostOffAction, deleteLolPostRequestAction } from '../reducers/post';
 import { emptyCommentsRequestAction } from '../reducers/comment';
-import ButtonGroup from 'antd/lib/button/button-group';
+import Router from 'next/router';
 
 
 const Frame = styled.div`
@@ -26,6 +25,10 @@ const DetailPost = () => {
         dispatch(emptyCommentsRequestAction());
     }
 
+    const onUpdate = useCallback(() => {
+        Router.push('/lol_update')
+    }, []);
+
     const onDeleteLolPost = useCallback(() => {
         const data = { userToken: me.userToken, userId: me.userId, postId: detailLolPost.id };
         dispatch(deleteLolPostRequestAction(data))
@@ -39,12 +42,11 @@ const DetailPost = () => {
             <div>{detailLolPost.content}</div>
             {me.userId === detailLolPost.userId
                 && <div>
-                    <Button>
-                        <Link href='/lol_update'><a>수정</a>
-                        </Link>
-                    </Button>
+                    <Popconfirm title={'정말 수정하시겠습니까?'} onConfirm={onUpdate} okText="수정" cancelText="취소">
+                        <a href="#">수정</a>
+                    </Popconfirm>
                     <Popconfirm title={'정말 삭제하시겠습니까?'} onConfirm={onDeleteLolPost} okText="삭제" cancelText="취소" okButtonProps={{ loading: deleteLolPostLoading }}>
-                        <a href="#">Delete</a>
+                        <a href="#">삭제</a>
                     </Popconfirm>
                 </div>}
             <CommentForm />

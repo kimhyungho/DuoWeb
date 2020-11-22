@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Button, Form, Result } from 'antd';
 import KakaoLogin from 'react-kakao-login';
 import NaverLogin from 'react-login-by-naver';
 import GoogleLogin from 'react-google-login';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction } from '../reducers/user';
 import Original_logo from '../images/Original_logo.png';
 import Link from 'next/link';
@@ -13,34 +13,47 @@ import Router from 'next/router';
 
 const LoginFrom = () => {
     const dispatch = useDispatch();
-    
+
+    const { logInDone, logInLoading, logInError } = useSelector((state) => state.user);
+
     const responseKakao = (response) => {
         console.log(response.response.access_token);
         const data = { accessToken: response.response.access_token, platform: 'kakao' };
         dispatch(loginRequestAction(data));
-        Router.push('/');    
     };
 
-    // const responseNaver = (response) => {
-    //     if (typeof window !== 'undefined') {
-    //         if ((window.location.origin + '/') != window.location.href) {
-    //             const location = window.location.href.split('=')[1];
-    //             const accessToken = location.split('&')[0];
-    //             const data = { accessToken: accessToken, platform: 'naver' };
-    //             dispatch(loginRequestAction(data));
-    //         }
-    //     }
-    // }
+    const responseLogin = (response, platform) => {
+        console.log(response, platform);
+    };
 
-    // const responseGoogle = (response) => {
-    //     console.log(response.accessToken)
-    //     const data = { accessToken: response.accessToken, platform: 'google' };
-    //     dispatch(loginRequestAction(data));
-    // };
+    useEffect(() => {
+        if (typeof window !== 'undefined' && (window.location.origin + '/') != window.location.href) {
+            {
+                const location = window.location.href.split('=')[1];
+                if (location) {
+                    const accessToken = location.split('&')[0];
+                    const data = { accessToken: accessToken, platform: 'naver' };
+                    console.log(accessToken);
+                    dispatch(loginRequestAction(data));
+                }
+            }
+        }
+
+        if (logInDone) {
+            console.log(logInDone);
+            Router.push('/');
+        }
+
+        if(logInError === -401){
+            Router.push('/sign_up')
+        }
+
+    }, [logInDone, logInError]);
+
 
     const responseFail = (err) => {
         console.error(err);
-        Router.push('/'); 
+        Router.push('/');
     };
 
     return (
@@ -55,34 +68,28 @@ const LoginFrom = () => {
                     onFailure={responseFail}
                     getProfile={true}
                 ></KakaoLogin>
-            </div>
-            <div style={{ marginTop: 10 }}>
-                <Button>네이버 계정으로 로그인</Button>
-            </div>
-            <div style={{ marginTop: 10 }}>
-                <Button>구글 계정으로 로그인</Button>
+                <br />
+                <NaverLogin
+                    clientId="0xe5BaDwdA6UNdboCXn7"
+                    callbackUrl="http://localhost:3000/login"
+                    render={(props) => <Button onClick={props.onClick}>
+                        네이버로그인</Button>}
+                    onSuccess={(res) => responseLogin(res, 'naver')}
+                    onFailure={() => console.log('naver login fail')}
+                />
+                <br />
             </div>
             <div style={{ marginTop: 10 }}>
                 <Link href='/' ><a>홈페이지</a></Link>로 돌아가기
                 </div>
 
-
-
-            {/* <NaverLogin
-                clientId="0xe5BaDwdA6UNdboCXn7"
-                callbackUrl="http://127.0.0.1:3000/"
-                render={(props) => <Button onClick={props.onClick}>네이버 로그인</Button>}
-                onSuccess={(res) => console.log('성공')}
-                onFailure={() => console.log('naver login fail')}
-            />
-            <br />
-            <GoogleLogin
+            {/* <GoogleLogin
                 clientId={'39496035317-r14irfnovjild7jovff5n0grpthkb206.apps.googleusercontent.com'}
                 buttonText="구글로그인"
                 onSuccess={responseGoogle}
                 onFailure={responseFail}
-            ></GoogleLogin>
-            <br /> */}
+            ></GoogleLogin> */}
+            <br />
         </div>
     );
 };

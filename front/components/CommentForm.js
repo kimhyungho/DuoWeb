@@ -38,7 +38,6 @@ const CommentForm = () => {
                 </Form.Item>
             </Form>
         </>
-
     )
 };
 
