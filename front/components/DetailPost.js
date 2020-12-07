@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { detailLolPostOffAction, deleteLolPostRequestAction } from '../reducers/post';
 import { emptyCommentsRequestAction } from '../reducers/comment';
 import Router from 'next/router';
+import Avatar from 'antd/lib/avatar/avatar';
 
 
 const Frame = styled.div`
@@ -61,6 +62,10 @@ const DetailPost = () => {
                             <Comment
                                 author={item.nickname}
                                 content={item.content}
+                                avatar={
+                                    <Avatar style={{ color: '#000000', backgroundColor: '#FFFFFF' }}>{item.nickname[0]}</Avatar>
+                                }
+
                             />
                         </li>
 

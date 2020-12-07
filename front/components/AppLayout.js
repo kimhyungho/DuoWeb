@@ -19,12 +19,14 @@ const AppLayout = ({ children }) => {
     return (
         <div>
             <div style={{ margin: 20, display: "block" }}>
-                <img src={Black_logo} height={30}></img>
-                <Button type="primary" style={{ float: "right" }}><Link href='/login'><a>로그인</a></Link></Button>
-                </div>
+                <Link href='/'><a><img src={Black_logo} height={30}></img></a></Link>
+                {!userId
+                    ? <Button type="primary" style={{ float: "right" }}><Link href='/login'><a>로그인</a></Link></Button>
+                    : <></>}
+            </div>
             <Menu mode="horizontal" >
                 <SubMenu title="게임목록">
-                    <Menu.Item key="lol"><Link href="/"><a>리그오브레전드</a></Link></Menu.Item>
+                    <Menu.Item key="lol"><Link href="/home"><a>리그오브레전드</a></Link></Menu.Item>
                     <Menu.Item key="overwatch">오버워치</Menu.Item>
                     <Menu.Item key="battleground">배틀그라운드</Menu.Item>
                 </SubMenu>

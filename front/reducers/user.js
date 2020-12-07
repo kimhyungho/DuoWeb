@@ -120,6 +120,10 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
             draft.logInError = null;
             draft.signUpLoading = false;
             draft.signUpDone = true;
+            draft.logInDone = true;
+            draft.me.userId = action.data.userId;
+            draft.me.nickname = action.data.nickname;
+            draft.me.userToken = action.data.userToken;
             break;
         case SIGN_UP_FAILURE:
             draft.signUpLoading = false;

@@ -15,7 +15,9 @@ export const initialState = {
     updateLolPostLoading: false,
     updateLolPostDone: false,
     updateLolPostError: null,
-
+    filterLolPostLoading: false,
+    filterLolPostDone: false,
+    filterLolPostError: null,
     detailLolPostOn: false,
     detailLolPost: null,
 };
@@ -35,6 +37,10 @@ export const DELETE_LOL_POST_FAILURE = 'DELETE_LOL_POST_FAILURE';
 export const UPDATE_LOL_POST_REQUEST = 'UPDATE_LOL_POST_REQUEST';
 export const UPDATE_LOL_POST_SUCCESS = 'UPDATE_LOL_POST_SUCCESS';
 export const UPDATE_LOL_POST_FAILURE = 'UPDATE_LOL_POST_FAILURE';
+
+export const FILTER_LOL_POST_REQUEST = 'FILTER_LOL_POST_REQUEST';
+export const FILTER_LOL_POST_SUCCESS = 'FILTER_LOL_POST_SUCCESS';
+export const FILTER_LOL_POST_FAILURE = 'FILTER_LOL_POST_FAILURE';
 
 export const DETAIL_LOL_POST_ON = 'DETAIL_LOL_POST_ON';
 export const DETAIL_LOL_POST_OFF = 'DETAIL_LOL_POST_OFF';
@@ -60,8 +66,10 @@ export const updateLolPostRequestAction = (data) => ({
     data,
 });
 
-
-
+export const filterLolPostRequestAction = (data) => ({
+    type: FILTER_LOL_POST_REQUEST,
+    data,
+});
 
 export const detailLolPostOnAction = (data) => ({
     type: DETAIL_LOL_POST_ON,
@@ -71,6 +79,9 @@ export const detailLolPostOnAction = (data) => ({
 export const detailLolPostOffAction = () => ({
     type: DETAIL_LOL_POST_OFF,
 });
+
+
+
 
 
 
@@ -140,6 +151,21 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
             draft.updateLolPostLoading = false;
             draft.updateLolPostError = action.error;
             break;
+        case FILTER_LOL_POST_REQUEST:
+            draft.filterLolPostLoading = true;
+            draft.filterLolPostDone = false;
+            draft.filterLolPostError = null;
+            break;
+        case FILTER_LOL_POST_SUCCESS:
+            draft.filterLolPostLoading = false;
+            draft.filterLolPostDone = true;
+            draft.posts = action.data;
+            break;
+        case FILTER_LOL_POST_FAILURE:
+            draft.filterLolPostLoading = false;
+            draft.filterLolPostError = action.error;
+            break;
+
         case DETAIL_LOL_POST_ON:
             draft.detailLolPostOn = true;
             draft.detailLolPost = action.data;

@@ -14,10 +14,13 @@ import {
     UPDATE_LOL_POST_REQUEST,
     UPDATE_LOL_POST_SUCCESS,
     UPDATE_LOL_POST_FAILURE,
+    FILTER_LOL_POST_REQUEST,
+    FILTER_LOL_POST_SUCCESS,
+    FILTER_LOL_POST_FAILURE,
 } from '../reducers/post';
 
 function loadAllLolPostsAPI(data) {
-    return axios.get(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/post/lol`,
+    return axios.get(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/post/lol?limit=${data.limit}&offset=${data.offset}`,
         {}, { headers: { Authorization: data.userToken } });
 }
 
@@ -70,10 +73,12 @@ function* addLolPost(action) {
     }
 }
 
-function deleteLolPostAPI(data) {
+
+
+function deleteLolPostAPI(data2) {
     return axios.delete(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/post/lol`,
-        { postId: data.postId, userId: data.userId }, { headers: { Authorization: data.userToken } });
-};
+    {headers: { Authorization: data2.userToken}, data : {postId: data2.postId, userId: data2.userId}}
+)};
 
 function* deleteLolPost(action) {
     try {
@@ -128,6 +133,30 @@ function* updateLolPost(action) {
 }
 
 
+function filterLolPostAPI(data) {
+    return axios.get(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/post/lol/filter?gameMode=${data.gameMode}&headCount=${data.headCount}&wantTier=${data.wantTier}&top=${data.top}&bottom=${data.bottom}&mid=${data.mid}&jungle=${data.jungle}&support=${data.support}&talkon=${data.talkOn}&limit=${data.limit}&offset=${data.offset}`,
+        {}, { headers: { Authorization: data.userToken } });
+};
+
+function* filterLolPost(action) {
+    try {
+        const result = yield call(filterLolPostAPI, action.data);
+        console.log(result)
+
+        yield put({
+            type: FILTER_LOL_POST_SUCCESS,
+            data: result.data,
+        });
+    } catch (err) {
+        console.log(err.response);
+        yield put({
+            type: FILTER_LOL_POST_FAILURE,
+            error: err.response,
+        });
+    }
+}
+
+
 function* watchLoadAllLolPosts() {
     yield takeLatest(LOAD_ALL_LOL_POSTS_REQUEST, loadAllLolPosts);
 }
@@ -144,11 +173,16 @@ function* watchUpdateLolPost() {
     yield takeLatest(UPDATE_LOL_POST_REQUEST, updateLolPost);
 }
 
+function* watchFilterLolPost() {
+    yield takeLatest(FILTER_LOL_POST_REQUEST, filterLolPost);
+}
+
 export default function* postSaga() {
     yield all([
         fork(watchLoadAllLolPosts),
         fork(watchAddLolPost),
         fork(watchDeleteLolPost),
         fork(watchUpdateLolPost),
+        fork(watchFilterLolPost)
     ]);
 }

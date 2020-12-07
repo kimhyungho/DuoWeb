@@ -3,6 +3,7 @@ import { Card, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link'
 import { logoutRequestAction } from '../reducers/user'
+import Avatar from 'antd/lib/avatar/avatar';
 const UserProfile = () => {
 
     const { nickname } = useSelector((state) => state.user.me);
@@ -23,6 +24,9 @@ const UserProfile = () => {
                 ]}
             >
                 <Card.Meta
+                avatar={<Avatar>
+                    {nickname[0]}
+                </Avatar>}
                     title={nickname}
                 />
                 <Button onClick={onClickLogout}>로그아웃</Button>

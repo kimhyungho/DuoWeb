@@ -75,8 +75,13 @@ function* signUp(action) {
 }
 
 
-function signOutAPI(data) {
-    return axios.delete('http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/auth', { userId: data.userId}, { headers: { Authorization: data.userToken } });
+function signOutAPI(data2) {
+    return axios.delete('http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/auth',
+        {
+            headers: { Authorization: data2.userToken }, data: {
+                userId: data2.userId
+            }
+        });
 
 }
 function* signOut(action) {

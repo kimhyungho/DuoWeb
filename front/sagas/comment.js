@@ -56,10 +56,10 @@ function* addComment(action) {
     }
 }
 
-function removeCommentAPI(data) {
+function removeCommentAPI(data2) {
     return axios.delete(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/comment/lol`,
-        { commentId: data.commentId, userId: data.userId }, { headers: { Authorization: data.userToken } });
-}
+    {headers: {Authorization: data2.userToken}, data: { commentId: data2.commentId, userId: data2.userId}}
+    )};
 
 function* removeComment(action) {
     try {

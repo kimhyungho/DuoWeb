@@ -82,7 +82,7 @@ const LolWriteFrom = () => {
         const data = { userToken: me.userToken }
         if (updateLolPostDone && isDoneUpdatePost) {
             dispatch(loadAllLolPostsRequestAction(data));
-            Router.push('/');
+            Router.push('/home');
         }
     }, [updateLolPostDone, isDoneUpdatePost]);
 

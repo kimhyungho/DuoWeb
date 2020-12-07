@@ -2,8 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Button, Form, Result } from 'antd';
 import KakaoLogin from 'react-kakao-login';
 import NaverLogin from 'react-login-by-naver';
-import GoogleLogin from 'react-google-login';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction } from '../reducers/user';
 import Original_logo from '../images/Original_logo.png';
@@ -41,7 +39,7 @@ const LoginFrom = () => {
 
         if (logInDone) {
             console.log(logInDone);
-            Router.push('/');
+            Router.push('/home');
         }
 
         if(logInError === -401){
@@ -53,7 +51,7 @@ const LoginFrom = () => {
 
     const responseFail = (err) => {
         console.error(err);
-        Router.push('/');
+        Router.push('/home');
     };
 
     return (

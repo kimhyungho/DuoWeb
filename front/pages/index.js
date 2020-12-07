@@ -1,5 +1,5 @@
-import { Button } from 'antd';
-import React, { useEffect } from 'react';
+import { Button, Pagination } from 'antd';
+import React, { useEffect, useCallback, useState } from 'react';
 import AppLayout from '../components/AppLayout';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,39 +7,29 @@ import SignUpForm from '../components/SignUpForm';
 import { loadAllLolPostsRequestAction } from '../reducers/post';
 import PostCard from '../components/LolPostCard'
 import DetailPost from '../components/DetailPost';
+import ButtonGroup from 'antd/lib/button/button-group';
+import LolFilterForm from '../components/LolFilterForm'
+import styled from 'styled-components';
+import LOGO from '../images/WEB_LOGO.png'
 
-const Home = () => {
-    const dispatch = useDispatch();
-    const { me } = useSelector((state) => state.user);
-    const { logInError, logInDone } = useSelector((state) => state.user);
-    const { posts, loadPostLoading, loadPostError, detailLolPost, detailLolPostOn } = useSelector((state) => state.post);
+const Background = styled.div`
+    width: 100%;
+    height: 100vh;
 
-    useEffect(() => {
-        const data = { userToken: me.userToken }
-        if (logInDone) {
-            dispatch(loadAllLolPostsRequestAction(data));
-        }
-    }, [logInDone]);
+    background-color: #FA5A5A
 
-    if (logInError === -401) {
+
+`
+
+const Index = () => {
         return (
-            <AppLayout>
-                <SignUpForm />
-            </AppLayout>
-        )
-    } else {
-        return (
-            <AppLayout>
-                {me.userToken && <div></div>}
-                <div style={{textAlign: 'right', margin: 20}}>                
-                    <Button type="primary" style={{ marginLeft: '20px' }}><Link href="./lol_write"><a>글쓰기</a></Link></Button>
-                </div>
-                <br />
-                {me.userToken && !detailLolPostOn && posts.map((post) => <PostCard key={post.id} post={post} />)}
-                {me.userToken && detailLolPostOn && <DetailPost/>}
-            </AppLayout>
+               <Background>
+                    <div>
+                        <img src={LOGO} style={{height: "100vh", textAlign: 'right', float: 'right'}}></img>
+                    </div>
+                </Background>
+
         );
-    }
 };
 
-export default Home;
+export default Index;
