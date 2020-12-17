@@ -4,7 +4,7 @@ import AppLayout from '../components/AppLayout';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import SignUpForm from '../components/SignUpForm';
-import { loadAllLolPostsRequestAction } from '../reducers/post';
+import { loadAllLolPostsRequestAction, loadAllMyLolPostsRequestAction } from '../reducers/post';
 import PostCard from '../components/LolPostCard'
 import DetailPost from '../components/DetailPost';
 import ButtonGroup from 'antd/lib/button/button-group';
@@ -18,9 +18,10 @@ const Home = () => {
     const { posts, loadPostLoading, loadPostError, detailLolPost, detailLolPostOn } = useSelector((state) => state.post);
 
     useEffect(() => {
-        const data = { limit: 15, offset: 0, userToken: me.userToken }
+        const data = { limit: 15, offset: 0, userToken: me.userToken, userId: me.userId }
         if (logInDone) {
             dispatch(loadAllLolPostsRequestAction(data));
+            dispatch(loadAllMyLolPostsRequestAction(data));
         }
     }, [logInDone]);
 

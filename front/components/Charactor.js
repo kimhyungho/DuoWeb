@@ -5,6 +5,7 @@ import { Menu, Row, Col } from 'antd';            // https://ant.design/componen
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Button } from 'antd';
+import LOGO from '../images/WEB_LOGO.png';
 
 const Background = styled.div`
     width: 100%;
@@ -19,17 +20,9 @@ const CHARACTOR = () => {
         <Background id="charactor">
             <Row>
                 <Col xs={24} md={12} >
+                    <img src={LOGO} width="500px"></img>
                 </Col>
-
                 <Col xs={24} md={12} >
-                    <div>
-                        <nav>
-                            <a href="#home" style={{ color: 'white', display: 'inline', marginLeft: '50px', fontSize: '2vh' }}>HOME</a>
-                            <a href="#about" style={{ color: 'white', display: 'inline', marginLeft: '50px', fontSize: '2vh' }}>ABOUT</a>
-                            <a href="#charactor" style={{ color: 'white', display: 'inline', marginLeft: '50px', fontSize: '2vh' }}>CHARACTOR</a>
-                            <a href="#help" style={{ color: 'white', display: 'inline', marginLeft: '50px', fontSize: '2vh' }}>HELP</a>
-                        </nav>
-                    </div>
                 </Col>
             </Row>
 

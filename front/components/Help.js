@@ -15,14 +15,6 @@ const HELP = () => {
             <Col xs={24} md={12} >
             </Col>
             <Col xs={24} md={12} >
-                <div>
-                    <nav>
-                    <a href="#home" style={{ color: '#FA5A5A', display: 'inline', marginLeft: '50px', fontSize: '2vh'}}>HOME</a>
-                            <a href="#about" style={{ color: '#FA5A5A', display: 'inline', marginLeft: '50px', fontSize: '2vh'}}>ABOUT</a>
-                            <a href="#charactor" style={{ color: '#FA5A5A', display: 'inline', marginLeft: '50px', fontSize: '2vh'}}>CHARACTOR</a>
-                            <a href="#help" style={{ color: '#FA5A5A', display: 'inline', marginLeft: '50px', fontSize: '2vh'}}>HELP</a>
-                    </nav>
-                </div>
             </Col>
         </Row>
 

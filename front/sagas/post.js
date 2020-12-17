@@ -17,6 +17,9 @@ import {
     FILTER_LOL_POST_REQUEST,
     FILTER_LOL_POST_SUCCESS,
     FILTER_LOL_POST_FAILURE,
+    LOAD_ALL_MY_LOL_POSTS_REQUEST,
+    LOAD_ALL_MY_LOL_POSTS_SUCCESS,
+    LOAD_ALL_MY_LOL_POSTS_FAILURE,
 } from '../reducers/post';
 
 function loadAllLolPostsAPI(data) {
@@ -157,8 +160,35 @@ function* filterLolPost(action) {
 }
 
 
+function loadMyLolPostAPI(data) {
+    return axios.get(`http://ec2-18-222-143-156.us-east-2.compute.amazonaws.com:3000/post/me?userId=${data.userId}`,
+        {}, { headers: { Authorization: data.userToken } });
+};
+
+function* loadAllMyLolPosts(action) {
+    try {
+        const result = yield call(loadMyLolPostAPI, action.data);
+        console.log(result)
+        yield put({
+            type: LOAD_ALL_MY_LOL_POSTS_SUCCESS,
+            data: result.data,
+        });
+    } catch (err) {
+        console.log(err.response);
+        yield put({
+            type: LOAD_ALL_MY_LOL_POSTS_FAILURE,
+            error: err.response,
+        });
+    }
+}
+
+
 function* watchLoadAllLolPosts() {
     yield takeLatest(LOAD_ALL_LOL_POSTS_REQUEST, loadAllLolPosts);
+}
+
+function* watchLoadMyLolPosts() {
+    yield takeLatest(LOAD_ALL_MY_LOL_POSTS_REQUEST, loadAllMyLolPosts);
 }
 
 function* watchAddLolPost() {
@@ -177,12 +207,14 @@ function* watchFilterLolPost() {
     yield takeLatest(FILTER_LOL_POST_REQUEST, filterLolPost);
 }
 
+
 export default function* postSaga() {
     yield all([
         fork(watchLoadAllLolPosts),
         fork(watchAddLolPost),
         fork(watchDeleteLolPost),
         fork(watchUpdateLolPost),
-        fork(watchFilterLolPost)
+        fork(watchFilterLolPost),
+        fork(watchLoadMyLolPosts),
     ]);
 }

@@ -14,27 +14,19 @@ const Background = styled.div`
     background: linear-gradient(to right, #f80759, #FA5A5A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 `
 
-const LoginBtn = styled(Button)`
-    width: 100%;
-`
-
 const APP = () => {
     return (
         <Background id="home">
             <Row>
                 <Col xs={24} md={12} >
-                    
-                <LoginBtn style={{top: '60vh', width: '300px'}}><a href='/login'>로그인</a></LoginBtn>
+                    <div style={{marginTop: '50vh', width: '300px', marginLeft: '20%'}}>
+                        <h1 style={{color: 'white'}}>듀오구함</h1>
+                        <h3 style={{color: 'white'}}>안녕하세요</h3>
+                        <Button style={{width: '100%'}}><a href='/login'>로그인</a></Button>  
+                    </div>
+                                  
                 </Col>
                 <Col xs={24} md={12} >
-                    <div>
-                        <nav>
-                            <a href="#home" style={{ color: 'white', display: 'inline', marginLeft: '100px', fontSize: '2vh' }}>HOME</a>
-                            <a href="#about" style={{ color: 'white', display: 'inline', marginLeft: '50px', fontSize: '2vh' }}>ABOUT</a>
-                            <a href="#charactor" style={{ color: 'white', display: 'inline', marginLeft: '50px', fontSize: '2vh' }}>CHARACTOR</a>
-                            <a href="#help" style={{ color: 'white', display: 'inline', marginLeft: '50px', fontSize: '2vh' }}>HELP</a>
-                        </nav>
-                    </div>
                 </Col>
             </Row>
 

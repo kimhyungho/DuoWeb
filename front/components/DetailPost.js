@@ -36,13 +36,6 @@ const DetailPost = () => {
     }, []);
 
 
-    // useEffect(() => {
-    //     if (deleteLolPostDone) {
-            
-    //     }
-    //     }, [deleteLolPostDone]);
-
-
     const changeTier = (tier) => {
 
         switch (tier) {
@@ -150,6 +143,7 @@ const DetailPost = () => {
             <Tag style={{ marginTop: 3 }} color="gray">모집 인원</Tag>
             {detailLolPost.headCount}명
             <br />
+            
             <Tag style={{ marginTop: 3 }} color="gray">모집 티어</Tag>
             {changeTier(detailLolPost.startTier)}~{changeTier(detailLolPost.endTier)}
             <br />

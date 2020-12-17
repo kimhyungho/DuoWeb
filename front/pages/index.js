@@ -4,17 +4,19 @@ import APP from '../components/App';
 import CHARACTOR from '../components/Charactor';
 import ABOUT from '../components/About';
 import HELP from '../components/Help';
+import MenuBar from '../components/Menu';
+import styled from 'styled-components';
 
 
 
 const Index = () => {
     return (
         <div style={{fontFamily:'Noto Sans KR'}}>
-            <div style={{width: '100%', height: '25%'}}><APP/></div>
-            
+            <APP/>
             <ABOUT />
             <CHARACTOR />
             <HELP />
+            <MenuBar/>
         </div>
     );
 };

@@ -7,6 +7,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 const UserProfile = () => {
 
     const { nickname } = useSelector((state) => state.user.me);
+    const { myLolPosts } = useSelector((state) => state.post)
 
     const dispatch = useDispatch();
     const onClickLogout = useCallback(() => {
@@ -19,14 +20,14 @@ const UserProfile = () => {
             <Card
                 actions={[
                     <div key="chat">채팅<br />0</div>,         // react배열은 key붙여주어야함
-                    <div key="my_post">My글<br />0</div>,
+                    <div key="my_post">My글<br />{`${myLolPosts ? myLolPosts.length : 0}개`}</div>,
                     <div key="my_info"><Link href='/info'><a>내 정보</a></Link></div>
                 ]}
             >
                 <Card.Meta
-                avatar={<Avatar>
-                    {nickname[0]}
-                </Avatar>}
+                    avatar={<Avatar>
+                        {nickname[0]}
+                    </Avatar>}
                     title={nickname}
                 />
                 <Button onClick={onClickLogout}>로그아웃</Button>
