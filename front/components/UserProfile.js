@@ -8,7 +8,6 @@ const UserProfile = () => {
 
     const { nickname } = useSelector((state) => state.user.me);
     const { myLolPosts } = useSelector((state) => state.post)
-
     const dispatch = useDispatch();
     const onClickLogout = useCallback(() => {
         dispatch(logoutRequestAction());
