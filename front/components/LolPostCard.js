@@ -10,11 +10,11 @@ import { loadCommentsRequestAction } from '../reducers/comment';
 const CardWrapper = styled.div`
     margin: 20px;
     display: inline-block;
-    width: 400px;
+    width: 360px;
 `;
 
 const CardMeta = styled(Card.Meta)`
-    height: 150px;
+    height: 160px;
 `;
 
 const LolPostCard = ({ post }) => {
@@ -74,6 +74,8 @@ const LolPostCard = ({ post }) => {
                 ><CardMeta
                         title={
                             <>
+                                <text style={{fontWeight: 'bold'}}>{post.title}</text>
+                                <br/>
                                 {post.gameMode}
                                 <br/>
                                 {post.headCount}명
@@ -86,7 +88,7 @@ const LolPostCard = ({ post }) => {
                                 {post.bottom === 1 && <Tag color='#424242'>바텀</Tag>}
                                 {post.support === 1 && <Tag color='#424242'>서폿</Tag>}
                                 <br/>
-                                {post.endTime}
+                                만료
                             </>
                         }
                         description={post.title}

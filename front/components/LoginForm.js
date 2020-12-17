@@ -4,9 +4,35 @@ import KakaoLogin from 'react-kakao-login';
 import NaverLogin from 'react-login-by-naver';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction } from '../reducers/user';
-import Original_logo from '../images/Original_logo.png';
+import Original_logo from '../images/LOGIN_LOGO.png';
 import Link from 'next/link';
 import Router from 'next/router';
+import styled from 'styled-components'
+
+const K = styled(KakaoLogin)`
+    width: 300px;
+    height: 40px;
+    background-color: #FEE500;
+    
+`;
+
+
+const N = styled(Button)`
+    width: 300px;
+    height: 40px;
+    margin-top: 5px;
+    background-color: #1EC800;
+
+`;
+
+
+const G = styled(Button)`
+    width: 300px;
+    height: 40px;
+    margin-top: 5px;
+
+
+`;
 
 
 const LoginFrom = () => {
@@ -56,26 +82,30 @@ const LoginFrom = () => {
 
     return (
         <div style={{ backgroundColor: '#FFFFFF', padding: 50, textAlign: "center" }}>
-            <img src={Original_logo} style={{ height: 40 }}></img>
+            <img src={Original_logo} style={{ height: 100 }}></img>
             <br></br>
             <div style={{ marginTop: 10 }}>
-                <KakaoLogin
+                <K
                     jsKey={'593246069c7b7a42344710a951c039ee'}
                     buttonText="카카오 계정으로 로그인"
                     onSuccess={responseKakao}
                     onFailure={responseFail}
                     getProfile={true}
-                ></KakaoLogin>
+                ></K>
                 <br />
                 <NaverLogin
                     clientId="0xe5BaDwdA6UNdboCXn7"
                     callbackUrl="http://localhost:3000/login"
-                    render={(props) => <Button onClick={props.onClick}>
-                        네이버로그인</Button>}
+                    render={(props) => <N onClick={props.onClick}>
+                        네이버 계정으로 로그인</N>}
                     onSuccess={(res) => responseLogin(res, 'naver')}
                     onFailure={() => console.log('naver login fail')}
                 />
                 <br />
+                <G>
+                    구글 계정으로 로그인
+                </G>
+                <br/>
             </div>
             <div style={{ marginTop: 10 }}>
                 <Link href='/' ><a>홈페이지</a></Link>로 돌아가기

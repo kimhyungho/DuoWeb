@@ -46,8 +46,8 @@ const Home = () => {
             <AppLayout>
                 {me.userToken
                     ? <div style={{ textAlign: 'right', margin: 20 }}>
-                        <ButtonGroup><Button type="primary" style={{ marginLeft: '20px' }}><Link href="./lol_write"><a>글쓰기</a></Link></Button>
-                        <Button onClick={onIsFilter}>필터</Button></ButtonGroup>
+                        <ButtonGroup><Button type="primary" style={{ marginLeft: '20px', backgroundColor: '#FA5A5A', borderColor: '#FA5A5A' }}><Link href="./lol_write"><a>글쓰기</a></Link></Button>
+                        <Button onClick={onIsFilter} style={{borderColor: '#FA5A5A'}}>필터</Button></ButtonGroup>
                         <br/>
                         {isFilter && <LolFilterForm/>}
                     </div>

@@ -9,11 +9,12 @@ import HELP from '../components/Help';
 
 const Index = () => {
     return (
-        <div>
-            <APP/>
-            <ABOUT/>
-            <CHARACTOR/>
-            <HELP/>
+        <div style={{fontFamily:'Noto Sans KR'}}>
+            <div style={{width: '100%', height: '25%'}}><APP/></div>
+            
+            <ABOUT />
+            <CHARACTOR />
+            <HELP />
         </div>
     );
 };

@@ -7,7 +7,15 @@ import { useSelector } from 'react-redux';
 import { Button } from 'antd';
 
 import UserProfile from './UserProfile';
-import Black_logo from '../images/Black_logo.png';
+
+
+const Toolbar = styled.div`
+    width: 100%;
+    height: 100px;
+    background: #FA5A5A;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f80759, #FA5A5A);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f80759, #FA5A5A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+`;
 
 const { SubMenu } = Menu;
 
@@ -17,14 +25,13 @@ const AppLayout = ({ children }) => {
 
     return (
         <div>
-            <div style={{ margin: 20, display: "block" }}>
-                <Link href='/'><a><img src={Black_logo} height={30}></img></a></Link>
+            <Toolbar>
                 {!userId
-                    ? <Button type="primary" style={{ float: "right" }}><Link href='/login'><a>로그인</a></Link></Button>
+                    ? <Button type="primary" style={{backgroundColor: '#ffffff', color: '#FA5A5A', top: 30, float: "right", right: 20 }}><Link href='/login'><a>로그인</a></Link></Button>
                     : <></>}
-            </div>
-            <Menu mode="horizontal" >
-                <SubMenu title="게임목록">
+            </Toolbar>
+            <Menu mode="horizontal">
+                <SubMenu title="게임목록" style={{caretColor: '#FA5A5A'}}>
                     <Menu.Item key="lol"><Link href="/home"><a>리그오브레전드</a></Link></Menu.Item>
                     <Menu.Item key="overwatch">오버워치</Menu.Item>
                     <Menu.Item key="battleground">배틀그라운드</Menu.Item>

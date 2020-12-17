@@ -120,6 +120,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
             draft.deleteLolPostError = null;
             break;
         case DELETE_LOL_POST_SUCCESS:
+            draft.detailLolPostOn = false;
             draft.deleteLolPostLoading = false;
             draft.deleteLolPostDone = true;
             break;
